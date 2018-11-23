@@ -16,11 +16,24 @@ public class Ajedrez implements IJuegoListener{
 	private static Ajedrez instancia = new Ajedrez();
 	private TableroGUI tableroGUI;
 	private static int movimientos = 0;
-	private static int piezasBlancasComidas = 0;
+	private static int piezasBlancasComidas;
 	private static int piezasNegrasComidas = 0;
 	
 	
+	public static int getPiezasBlancasComidas() {
+		return piezasBlancasComidas;
+	}
+
+	public static int getPiezasNegrasComidas() {
+		return Ajedrez.piezasNegrasComidas;
+	}
+
+	
+	
+	
 	public void IniciarJuego() {
+		piezasBlancasComidas = 0;
+		piezasNegrasComidas = 0;
 		this.tablero = new Tablero();
 		tablero.crearCeldas(); 
 		this.negras = new Equipo(NEGRAS, this);
