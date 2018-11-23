@@ -16,8 +16,8 @@ public class Rey extends Pieza{
 	}
 
 	public boolean movimientoValido(Celda nuevaCelda) {
-		if((((this.getCelda().getFila() - nuevaCelda.getFila()))<=1)&&
-			((this.getCelda().getColumna() - nuevaCelda.getColumna())<=1)&&
+		if(((Math.abs(this.getCelda().getFila() - nuevaCelda.getFila()))<=1)&&
+			(Math.abs(this.getCelda().getColumna() - nuevaCelda.getColumna())<=1)&&
 			(!nuevaCelda.estaOcupadaPorElMismoEquipo(getEquipo()))){
 			if (nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {
 				if (nuevaCelda.getPieza().esRey()) {
