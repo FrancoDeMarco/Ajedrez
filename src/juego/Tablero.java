@@ -1,11 +1,8 @@
 package juego;
 
-import java.util.ArrayList;
-
 public class Tablero {
 	
 	private Celda[][] celdas;
-	private Pieza pieza;
 	
 	
 	
@@ -37,14 +34,11 @@ public class Tablero {
 	}
 	
 	public void mover(Pieza pieza, int fila, int columna) {
-	/*	this.celda[pieza.getCelda().getFila()] [pieza.getCelda().getColumna()].setPieza(null);//Borro vieja posición
+	/*	this.celda[pieza.getCelda().getFila()] [pieza.getCelda().getColumna()].setPieza(null);//Borro vieja posiciï¿½n
 		pieza.setCelda(this.celda[fila][columna]);
-		this.celda[fila][columna].setPieza(pieza);//Agrego nueva posición*/
+		this.celda[fila][columna].setPieza(pieza);//Agrego nueva posiciï¿½n*/
 	}
 
-	public void quienesMatan(Pieza pieza) {
-		ArrayList<Pieza> piezas;
-	}
 	
 	public void getPiezas(Equipo equipo) {
 		

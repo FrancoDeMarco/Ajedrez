@@ -1,6 +1,5 @@
 package juego;
 
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
@@ -35,9 +34,17 @@ public class Peon extends Pieza{
 			}
 		}
 		if((this.getCelda().getColumna() == nuevaCelda.getColumna())&&
-				(this.getCelda().getFila()-nuevaCelda.getFila()==aux)&&
-				(!nuevaCelda.estaOcupadaPorElMismoEquipo(this.getEquipo()))){// Y QUE NO SE MUEVA HACIA ATRAS
-			return true;
+			(this.getCelda().getFila()-nuevaCelda.getFila()==aux)&&
+			(!(nuevaCelda.getPieza()!=null))){
+				if(Math.abs(aux) == 2) {
+					if (this.getEquipo().getAjedrez().getTablero().getCelda(this.getCelda().getFila()-(aux/2), this.getCelda().getColumna()).getPieza() == null) { //que no salte piezas
+						return true;
+					} else {
+						return false;
+					}
+				}else {
+					return true;
+				}
 		}else {
 			if (Math.abs((this.getCelda().getColumna() - nuevaCelda.getColumna())) == 1  && //Si la columna es alguna de las que tiene a los costados
 					(this.getCelda().getFila()-nuevaCelda.getFila())==aux && 				//si no se mueve para atras
@@ -53,7 +60,7 @@ public class Peon extends Pieza{
 	@Override
 	public void moverse(Celda nuevaCelda) {
 		super.moverse(nuevaCelda);
-		if (this.seMovio = false) {
+		if (this.seMovio == false) {
 			this.seMovio = true;
 		}
 	}

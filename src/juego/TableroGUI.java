@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -23,7 +22,6 @@ import javax.swing.JMenu;
 import java.awt.Panel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JButton;
 
 public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener {
 
@@ -139,36 +137,6 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			}
 		});
 		mnAyuda.add(mntmAcercaDe);
-		
-		
-		
-		JButton btnNewButton = new JButton("Turno de las Blancas");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		menuBar.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Turno de las Negras");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		menuBar.add(btnNewButton_1);
-		
-		JButton btnPiezasComidasBlancas = new JButton("Piezas comidas Blancas: "+ Ajedrez.getPiezasBlancasComidas());
-		btnPiezasComidasBlancas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		menuBar.add(btnPiezasComidasBlancas);
-		
-		JButton btnPiezasComidasNegras = new JButton("Piezas comidas Negras: "+ Ajedrez.getPiezasNegrasComidas());
-		btnPiezasComidasNegras.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		menuBar.add(btnPiezasComidasNegras);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -204,8 +172,6 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			}
 		}
 	}
-	
-	
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
@@ -224,10 +190,4 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			}
 		});
 	}
-	
-	/*public void Turno(Equipo equipo){
-		if(equipo.getNombre() = "Blancas"){
-			this.btnTurnoNegras=
-		}
-	}*/
 }

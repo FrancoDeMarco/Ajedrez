@@ -1,7 +1,5 @@
 package juego;
 
-import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
 public class Torre extends Pieza{
@@ -44,12 +42,14 @@ public class Torre extends Pieza{
 				if (columnaV == columnaN) { //^v
 					if (filaV > filaN) { //^
 						for (int i = 1; i < Math.abs(filaV-filaN); i++) {
+							System.out.println(this.getEquipo().getAjedrez().getTablero().getCelda(filaV-i, columnaV).getPieza());
 							if(this.getEquipo().getAjedrez().getTablero().getCelda(filaV-i, columnaV).getPieza() != null) {
 								return false;
 							}
 						}
 					} else {//v
 						for (int i = 1; i < Math.abs(filaV-filaN); i++) {
+							System.out.println(this.getEquipo().getAjedrez().getTablero().getCelda(filaV+i, columnaV).getPieza() );
 							if(this.getEquipo().getAjedrez().getTablero().getCelda(filaV+i, columnaV).getPieza() != null) {
 								return false;
 							}
@@ -58,12 +58,14 @@ public class Torre extends Pieza{
 				} else { //<--->
 					if (columnaV > columnaN) { // <
 						for (int i = 1; i < Math.abs(columnaV-columnaN); i++) {
+							System.out.println(this.getEquipo().getAjedrez().getTablero().getCelda(filaV, columnaV-i).getPieza());
 							if(this.getEquipo().getAjedrez().getTablero().getCelda(filaV, columnaV-i).getPieza() != null) {
 								return false;
 							}
 						}
 					}else { // >
 						for (int i = 1; i < Math.abs(columnaV-columnaN); i++) {
+							System.out.println(this.getEquipo().getAjedrez().getTablero().getCelda(filaV, columnaV+i).getPieza() );
 							if(this.getEquipo().getAjedrez().getTablero().getCelda(filaV, columnaV+i).getPieza() != null) {
 								return false;
 							}

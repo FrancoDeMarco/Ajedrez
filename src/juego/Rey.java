@@ -1,7 +1,6 @@
 package juego;
 
 import javax.swing.ImageIcon;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 public class Rey extends Pieza{
 	

@@ -1,6 +1,5 @@
 package juego;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 public class Ajedrez implements IJuegoListener{
@@ -16,24 +15,11 @@ public class Ajedrez implements IJuegoListener{
 	private static Ajedrez instancia = new Ajedrez();
 	private TableroGUI tableroGUI;
 	private static int movimientos = 0;
-	private static int piezasBlancasComidas;
+	private static int piezasBlancasComidas = 0;
 	private static int piezasNegrasComidas = 0;
 	
 	
-	public static int getPiezasBlancasComidas() {
-		return piezasBlancasComidas;
-	}
-
-	public static int getPiezasNegrasComidas() {
-		return Ajedrez.piezasNegrasComidas;
-	}
-
-	
-	
-	
 	public void IniciarJuego() {
-		piezasBlancasComidas = 0;
-		piezasNegrasComidas = 0;
 		this.tablero = new Tablero();
 		tablero.crearCeldas(); 
 		this.negras = new Equipo(NEGRAS, this);
@@ -146,15 +132,15 @@ public class Ajedrez implements IJuegoListener{
 	
 	public void Comenzar() {
 		while(!this.Finalizar(this.blancas, this.negras)) {
-			
+			this.Espera();
 			this.darTurno(this.tablero, this.blancas);
 			this.Espera();
 			
 			if(!this.Finalizar(this.negras, this.blancas)) {
 				this.darTurno(this.tablero, this.negras);
-				this.Espera();
 			}
 		}
+		System.out.println("FINALIZÓ EL JUEGO");
 	}
 	
 	public boolean Finalizar(Equipo blancas, Equipo negras) {
@@ -183,14 +169,39 @@ public class Ajedrez implements IJuegoListener{
 	}	
 	
 	public static void incrementarMovimientos() {
-		Ajedrez.movimientos++;
+		System.out.println("ENTRE A INCREMENTAR");
+		Ajedrez.setMovimientos(Ajedrez.getMovimientos() + 1);
 	}
 	
 	public static void incrementarPiezasBlancasComidas() {
-		Ajedrez.piezasBlancasComidas++;
+		Ajedrez.setPiezasBlancasComidas(Ajedrez.getPiezasBlancasComidas() + 1);
 	}
 	
 	public static void incrementarPiezasNegrasComidas() {
-		Ajedrez.piezasNegrasComidas++;
+		Ajedrez.setPiezasNegrasComidas(Ajedrez.getPiezasNegrasComidas() + 1);
+	}
+
+	public static int getPiezasBlancasComidas() {
+		return Ajedrez.piezasBlancasComidas;
+	}
+
+	public static void setPiezasBlancasComidas(int piezasBlancasComidas) {
+		Ajedrez.piezasBlancasComidas = piezasBlancasComidas;
+	}
+
+	public static int getPiezasNegrasComidas() {
+		return Ajedrez.piezasNegrasComidas;
+	}
+
+	public static void setPiezasNegrasComidas(int piezasNegrasComidas) {
+		Ajedrez.piezasNegrasComidas = piezasNegrasComidas;
+	}
+
+	public static int getMovimientos() {
+		return Ajedrez.movimientos;
+	}
+
+	public static void setMovimientos(int movimientos) {
+		Ajedrez.movimientos = movimientos;
 	}
 }

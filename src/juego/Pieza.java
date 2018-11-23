@@ -1,7 +1,6 @@
 package juego;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.Icon;
 
@@ -86,6 +85,7 @@ public abstract class Pieza{
 	
 	public void morir() {
 		this.estaViva = false;
+		System.out.println("A punto de incrementar comidas");
 		if (this.getEquipo().getNombre() == "Blancas") {
 			Ajedrez.incrementarPiezasBlancasComidas();
 		}else {
@@ -106,7 +106,7 @@ public abstract class Pieza{
 	}
 
 	public boolean estaViva() {
-		return estaViva;
+		return this.estaViva;
 	}
 
 	public void setEstaViva(boolean estaViva) {
@@ -146,16 +146,23 @@ public abstract class Pieza{
 	}
 
 	public void moverse(Celda nuevaCelda){ 
+		int filaN = nuevaCelda.getFila();
+		int columnaN = nuevaCelda.getColumna();
 		if(this.movimientoDentroDelTablero(nuevaCelda.getFila(), nuevaCelda.getColumna())) {//VERIFICO QUE EL NUEVO MOVIMINETO SE ENCUENTRE DENTRO DEL TABLERO
-			if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
-				nuevaCelda.getPieza().morir();
+			if(this.getEquipo().getAjedrez().getTablero().getCelda(filaN, columnaN).getPieza() != null) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
+				System.out.println("Alguien va a morir");
+				this.getEquipo().getAjedrez().getTablero().getCelda(filaN, columnaN).getPieza().morir();
 				this.getCelda().setPieza(null); //
 				this.setCelda(nuevaCelda);		
+				Ajedrez.incrementarMovimientos();
+
 			}else{//LA CELDA PUEDE ESTAR DESOCUPADA
 				this.getCelda().setPieza(null);
 				this.setCelda(nuevaCelda);
 			}
-			Ajedrez.incrementarMovimientos();
+			System.out.println("MOVIMIENTOS: "+ Ajedrez.getMovimientos());
+			System.out.println("Piezas blancas comidas:" + Ajedrez.getPiezasBlancasComidas());
+			System.out.println("Piezas negras comidas:" + Ajedrez.getPiezasNegrasComidas());
 		}
 	}
 	

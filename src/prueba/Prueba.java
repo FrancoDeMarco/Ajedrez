@@ -1,7 +1,6 @@
 package prueba;
 
 import juego.Ajedrez;
-import juego.TableroGUI;
 
 public class Prueba {
 
