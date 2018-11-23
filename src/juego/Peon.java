@@ -36,10 +36,17 @@ public class Peon extends Pieza{
 		}
 		if((this.getCelda().getColumna() == nuevaCelda.getColumna())&&
 				(this.getCelda().getFila()-nuevaCelda.getFila()==aux)&&
-				(!nuevaCelda.estaOcupadaPorElMismoEquipo(getEquipo()))){// Y QUE NO SE MUEVA HACIA ATRAS
+				(!nuevaCelda.estaOcupadaPorElMismoEquipo(this.getEquipo()))){// Y QUE NO SE MUEVA HACIA ATRAS
 			return true;
 		}else {
-			return false;
+			if (Math.abs((this.getCelda().getColumna() - nuevaCelda.getColumna())) == 1  && //Si la columna es alguna de las que tiene a los costados
+					(this.getCelda().getFila()-nuevaCelda.getFila())==aux && 				//si no se mueve para atras
+					(Math.abs(aux) != 2) && 												//si no quiere moverse mas de dos casillas
+					(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo()))){ 			//si esta ocupado por el equipo contrario
+						return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
