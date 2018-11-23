@@ -122,7 +122,7 @@ public class Ajedrez implements IJuegoListener{
 	public void Espera() {
 		System.out.println("\n");
 		try {
-			Thread.sleep(500);
+			Thread.sleep(100);
 		}catch(Exception e) {
 			System.out.println("\n");
 		}
@@ -161,15 +161,6 @@ public class Ajedrez implements IJuegoListener{
 		
 	}
 
-	
-	
-	/*public Equipo getEquipoContrario(Equipo equipo) {
-		if (equipo.getNombre() == "blancas"){
-			return negras;
-		}else {
-			return blancas;
-		}
-	}*/
 	
 	public static Ajedrez getInstancia() {
 		return instancia;

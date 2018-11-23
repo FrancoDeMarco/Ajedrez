@@ -18,8 +18,11 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import java.awt.Panel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener {
 
@@ -108,11 +111,33 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		JMenu mnIniciarJuego = new JMenu("Menu");
 		menuBar.add(mnIniciarJuego);
 		
-		JMenu mnIniciarJuego_1 = new JMenu("Iniciar juego");
-		mnIniciarJuego.add(mnIniciarJuego_1);
+		JMenuItem mntmNewMenuItem = new JMenuItem("Iniciar");
+		mnIniciarJuego.add(mntmNewMenuItem);
 		
-		JMenu mnFinalizarJuego = new JMenu("Finalizar Juego");
-		mnIniciarJuego.add(mnFinalizarJuego);
+		JMenuItem mntmReiniciar = new JMenuItem("Reiniciar");
+		mnIniciarJuego.add(mntmReiniciar);
+		
+		JMenuItem mntmFinalizar = new JMenuItem("Finalizar");
+		mnIniciarJuego.add(mntmFinalizar);
+		
+		JMenuItem mntmSalir = new JMenuItem("Salir");
+		mntmSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		mnIniciarJuego.add(mntmSalir);
+		
+		JMenu mnAyuda = new JMenu("Ayuda");
+		menuBar.add(mnAyuda);
+		
+		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de...");
+		mntmAcercaDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Integrantes del grupo: De Marco Andrada, Franco Guillermo");
+			}
+		});
+		mnAyuda.add(mntmAcercaDe);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
