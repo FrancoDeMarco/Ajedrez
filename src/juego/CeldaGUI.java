@@ -28,12 +28,16 @@ public class CeldaGUI extends JButton{
 		this.setVisible(true);
 	}
 
+	public void hardcodearImagen() {
+		this.setIcon(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\alfilNegro.png"));
+	}
+	
 	public Icon getImagen() {
 		return imagen;
 	}
 
 	public void setImagen(Icon icono) {
-		this.imagen = icono;
+		this.setIcon(icono);
 		this.repaint();
 	}
 

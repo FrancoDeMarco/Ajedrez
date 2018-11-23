@@ -10,9 +10,9 @@ public class Torre extends Pieza{
 	public Torre(Celda celda, Equipo equipo) {
 		super(celda, equipo);
 		if(equipo.getNombre() == "Negras") {
-			this.setImagen(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\torreNegro.png"));
+			this.setImagen(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\torreNegra.png"));
 		}else {
-			this.setImagen(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\torreBlanco.png"));
+			this.setImagen(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\torreBlanca.png"));
 		}
 	}
 

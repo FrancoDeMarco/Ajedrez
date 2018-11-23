@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -46,7 +47,18 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	public void juegoEmpieza(ArrayList<Pieza> blancas, ArrayList<Pieza> negras) {
 		System.out.println("ASDOUJFBOASDFBSAOFBAS");
 		CeldaGUI[][] celdas = this.getCeldasGUI();
+		System.out.println(celdas);
 		for (Pieza pieza : blancas) {
+			Celda celda = pieza.getCelda();
+			int fila = celda.getFila();
+			int columna = celda.getColumna();
+			
+			this.getCeldaXY(fila, columna).setImagen(pieza.getImagen());;
+			this.getCeldaXY(fila, columna).repaint();
+			this.repaint();
+			
+		}
+		for (Pieza pieza : negras) {
 			Celda celda = pieza.getCelda();
 			int fila = celda.getFila();
 			int columna = celda.getColumna();
