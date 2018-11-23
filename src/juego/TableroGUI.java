@@ -54,6 +54,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			this.getCeldaXY(fila, columna).setImagen(pieza.getImagen());;
 			this.getCeldaXY(fila, columna).repaint();
 			this.repaint();
+			
 		}
 	}
 
