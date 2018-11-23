@@ -57,11 +57,12 @@ public class Equipo {
 		ArrayList<Jugada> jugadas = new ArrayList<Jugada>();
 		
 		for (Pieza pieza : this.getPiezas()) {
-			
-			ArrayList<Celda> celdasPosibles = pieza.getCeldasPosibles(); //Devuelve un arreglo de Celdas a las que se puede mover la pieza
-			for (Celda celda : celdasPosibles) {
-				Jugada jugada = new Jugada(pieza, celda.getFila(), celda.getColumna());
-				jugadas.add(jugada);
+			if(pieza.estaViva()) {	
+				ArrayList<Celda> celdasPosibles = pieza.getCeldasPosibles(); //Devuelve un arreglo de Celdas a las que se puede mover la pieza
+				for (Celda celda : celdasPosibles) {
+					Jugada jugada = new Jugada(pieza, celda.getFila(), celda.getColumna());
+					jugadas.add(jugada);
+				}
 			}
 			//voy a recorrer las piezas y verificar todas las que tienen jugada, si tiene jugada, 
 			//genero una jugada y la guardo en la collecion de jugadas. 

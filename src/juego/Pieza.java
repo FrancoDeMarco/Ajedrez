@@ -34,7 +34,7 @@ public abstract class Pieza{
 	
 	public abstract boolean movimientoValido(Celda nuevaCelda);
 	
-	public abstract void moverse(Celda nuevaCelda);
+
 	
 	public boolean movimientoDentroDelTablero(int fila, int columna) {
 		if ((fila<0 || fila > 7)&&(columna<0 || columna > 7)) {
@@ -139,7 +139,18 @@ public abstract class Pieza{
 		
 	}
 
-
+	public void moverse(Celda nuevaCelda){ 
+		if(this.movimientoDentroDelTablero(nuevaCelda.getFila(), nuevaCelda.getColumna())) {//VERIFICO QUE EL NUEVO MOVIMINETO SE ENCUENTRE DENTRO DEL TABLERO
+			if(this.movimientoValido(nuevaCelda)) {//VERIFICO QUE EL MOVIMIENTO CORRESPONDA
+				if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
+					nuevaCelda.getPieza().morir();
+					this.setCelda(nuevaCelda);		
+				}else{//LA CELDA PUEDE ESTAR DESOCUPADA
+					this.setCelda(nuevaCelda);
+				}
+			}
+		}
+	}
 	
 	
 
