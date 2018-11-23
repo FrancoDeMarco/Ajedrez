@@ -13,9 +13,9 @@ public class Peon extends Pieza{
 		super(celda, equipo);
 		this.seMovio = false;
 		if(equipo.getNombre() == "Negras") {
-			this.setImagen(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\peonNegro.png"));
+			this.setImagen(new ImageIcon("img/peonNegro.png"));
 		}else {
-			this.setImagen(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\peonBlanco.png"));
+			this.setImagen(new ImageIcon("img/peonBlanco.png"));
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class Peon extends Pieza{
 			if(this.movimientoValido(nuevaCelda)) {//VERIFICO QUE EL MOVIMIENTO CORRESPONDA
 				if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
 					nuevaCelda.getPieza().morir();
-					System.out.println("El peon de "+ this.getEquipo().getNombre()+"comió la pieza de " + nuevaCelda.getPieza().getNombreEquipoContrario()+".");
+					System.out.println("El peon de "+ this.getEquipo().getNombre()+"comiï¿½ la pieza de " + nuevaCelda.getPieza().getNombreEquipoContrario()+".");
 					this.setCelda(nuevaCelda);		
 				}else{//LA CELDA PUEDE ESTAR DESOCUPADA
 					this.setCelda(nuevaCelda);

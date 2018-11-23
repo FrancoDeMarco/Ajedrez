@@ -9,19 +9,33 @@ public class Rey extends Pieza{
 	public Rey(Celda celda, Equipo equipo) {
 		super(celda, equipo);
 		if(equipo.getNombre() == "Negras") {
-			this.setImagen(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\reyNegro.png"));
+			this.setImagen(new ImageIcon("img/reyNegro.png"));
 		}else {
-			this.setImagen(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\reyBlanco.png"));
+			this.setImagen(new ImageIcon("img/reyBlanco.png"));
 		}
 	}
 
 	public boolean movimientoValido(Celda nuevaCelda) {
-		if(((this.getCelda().getFila() - nuevaCelda.getFila())<=1)&&((this.getCelda().getColumna() - nuevaCelda.getColumna())<=1)&&(!nuevaCelda.estaOcupadaPorElMismoEquipo(getEquipo()))) {
+		if(((this.getCelda().getFila() - nuevaCelda.getFila())<=1)&&
+			((this.getCelda().getColumna() - nuevaCelda.getColumna())<=1)&&
+			(!nuevaCelda.estaOcupadaPorElMismoEquipo(getEquipo()))){
+			if (nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {
+				if (nuevaCelda.getPieza().esRey()) {
+					return false;
+				}
+			}
 			return true;
 		}else {
 			return false;
 		}
 	}
+
+	@Override
+	public boolean esRey() {
+		return true;
+	}
+	
+	
 	
 	/*public void moverse(Celda nuevaCelda){ 
 		if(this.movimientoDentroDelTablero(nuevaCelda.getFila(), nuevaCelda.getColumna())) {//VERIFICO QUE EL NUEVO MOVIMINETO SE ENCUENTRE DENTRO DEL TABLERO
@@ -29,11 +43,11 @@ public class Rey extends Pieza{
 				if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
 					if(!nuevaCelda.estaOcupadaPorElMismoEquipo(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNA DE MIS PIEZAS
 						nuevaCelda.getPieza().morir();
-						System.out.println("El Rey de "+ this.getEquipo().getNombre()+"comió la pieza de " + nuevaCelda.getPieza().getNombreEquipoContrario()+".");
+						System.out.println("El Rey de "+ this.getEquipo().getNombre()+"comiï¿½ la pieza de " + nuevaCelda.getPieza().getNombreEquipoContrario()+".");
 						this.setCelda(nuevaCelda);		
 					}else{//LA CELDA PUEDE ESTAR DESOCUPADA
 						this.setCelda(nuevaCelda);
-						System.out.println("El Rey se movió.");
+						System.out.println("El Rey se moviï¿½.");
 					}
 				}	
 			}

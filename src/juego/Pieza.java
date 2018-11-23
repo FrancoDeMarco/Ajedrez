@@ -51,6 +51,7 @@ public abstract class Pieza{
 		this.setNombreEquipoContrario();;
 		this.estaViva = true;
 		this.piezaListeners = new ArrayList<IPiezaListener>();
+		celda.setPieza(this);
 	}
 
 	public Celda getCelda() {
@@ -144,12 +145,18 @@ public abstract class Pieza{
 			if(this.movimientoValido(nuevaCelda)) {//VERIFICO QUE EL MOVIMIENTO CORRESPONDA
 				if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
 					nuevaCelda.getPieza().morir();
+					this.getCelda().setPieza(null); //
 					this.setCelda(nuevaCelda);		
 				}else{//LA CELDA PUEDE ESTAR DESOCUPADA
+					this.getCelda().setPieza(null);
 					this.setCelda(nuevaCelda);
 				}
 			}
 		}
+	}
+	
+	public boolean esRey() {
+		return false;
 	}
 	
 	
