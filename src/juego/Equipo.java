@@ -31,7 +31,9 @@ public class Equipo {
 	}
 	
 	public static void ejecutar(Jugada jugada) {
+		System.out.println("La pieza está en la fila "+ jugada.getPieza().getCelda().getFila() + " columna " + jugada.getPieza().getCelda().getColumna());
 		jugada.getPieza().moverse(new Celda(jugada.getFila(), jugada.getColumna()));
+		System.out.println("La pieza pasó a la fila "+ jugada.getPieza().getCelda().getFila() + " columna " + jugada.getPieza().getCelda().getColumna());
 	}
 
 	public Ajedrez getAjedrez() {

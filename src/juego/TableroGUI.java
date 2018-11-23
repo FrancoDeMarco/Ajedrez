@@ -45,7 +45,6 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 
 	@Override
 	public void juegoEmpieza(ArrayList<Pieza> blancas, ArrayList<Pieza> negras) {
-		System.out.println("ASDOUJFBOASDFBSAOFBAS");
 		CeldaGUI[][] celdas = this.getCeldasGUI();
 		System.out.println(celdas);
 		for (Pieza pieza : blancas) {
@@ -79,6 +78,9 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	public void piezaMovida(Pieza pieza, Celda celdaOrigen, Celda celdaDestino) {
 		this.celdasGUI[celdaOrigen.getFila()][celdaOrigen.getColumna()].setImagen(null);
 		this.celdasGUI[celdaDestino.getFila()][celdaDestino.getColumna()].setImagen(pieza.getImagen());
+		this.celdasGUI[celdaOrigen.getFila()][celdaOrigen.getColumna()].repaint();
+		this.celdasGUI[celdaDestino.getFila()][celdaDestino.getColumna()].repaint();
+		this.repaint();
 	}
 
 	public CeldaGUI[][] getCeldasGUI() {
