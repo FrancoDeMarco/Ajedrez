@@ -15,6 +15,9 @@ public class Ajedrez implements IJuegoListener{
 	public ArrayList<IJuegoListener> juegoListener = new ArrayList<IJuegoListener>();
 	private static Ajedrez instancia = new Ajedrez();
 	private TableroGUI tableroGUI;
+	private static int movimientos = 0;
+	private static int piezasBlancasComidas = 0;
+	private static int piezasNegrasComidas = 0;
 	
 	
 	public void IniciarJuego() {
@@ -165,4 +168,16 @@ public class Ajedrez implements IJuegoListener{
 	public static Ajedrez getInstancia() {
 		return instancia;
 	}	
+	
+	public static void incrementarMovimientos() {
+		Ajedrez.movimientos++;
+	}
+	
+	public static void incrementarPiezasBlancasComidas() {
+		Ajedrez.piezasBlancasComidas++;
+	}
+	
+	public static void incrementarPiezasNegrasComidas() {
+		Ajedrez.piezasNegrasComidas++;
+	}
 }

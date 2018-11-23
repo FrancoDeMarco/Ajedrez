@@ -86,6 +86,11 @@ public abstract class Pieza{
 	
 	public void morir() {
 		this.estaViva = false;
+		if (this.getEquipo().getNombre() == "Blancas") {
+			Ajedrez.incrementarPiezasBlancasComidas();
+		}else {
+			Ajedrez.incrementarPiezasNegrasComidas();
+		}
 	}
 
 	public String getNombreEquipoContrario() {
@@ -142,16 +147,15 @@ public abstract class Pieza{
 
 	public void moverse(Celda nuevaCelda){ 
 		if(this.movimientoDentroDelTablero(nuevaCelda.getFila(), nuevaCelda.getColumna())) {//VERIFICO QUE EL NUEVO MOVIMINETO SE ENCUENTRE DENTRO DEL TABLERO
-			if(this.movimientoValido(nuevaCelda)) {//VERIFICO QUE EL MOVIMIENTO CORRESPONDA
-				if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
-					nuevaCelda.getPieza().morir();
-					this.getCelda().setPieza(null); //
-					this.setCelda(nuevaCelda);		
-				}else{//LA CELDA PUEDE ESTAR DESOCUPADA
-					this.getCelda().setPieza(null);
-					this.setCelda(nuevaCelda);
-				}
+			if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
+				nuevaCelda.getPieza().morir();
+				this.getCelda().setPieza(null); //
+				this.setCelda(nuevaCelda);		
+			}else{//LA CELDA PUEDE ESTAR DESOCUPADA
+				this.getCelda().setPieza(null);
+				this.setCelda(nuevaCelda);
 			}
+			Ajedrez.incrementarMovimientos();
 		}
 	}
 	
