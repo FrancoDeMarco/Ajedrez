@@ -17,6 +17,8 @@ public class Ajedrez implements IJuegoListener{
 	private static int movimientos = 0;
 	private static int piezasBlancasComidas = 0;
 	private static int piezasNegrasComidas = 0;
+	private static boolean finalizado = false;
+	private static boolean reiniciar = false;
 	
 	
 	public void IniciarJuego() {
@@ -124,7 +126,7 @@ public class Ajedrez implements IJuegoListener{
 	public void Espera() {
 		System.out.println("\n");
 		try {
-			Thread.sleep(100);
+			Thread.sleep(1000);
 		}catch(Exception e) {
 			System.out.println("\n");
 		}
@@ -144,14 +146,22 @@ public class Ajedrez implements IJuegoListener{
 	}
 	
 	public boolean Finalizar(Equipo blancas, Equipo negras) {
-		if ((blancas.getRey().estaViva())&&(negras.getRey().estaViva())){
+		if ((blancas.getRey().estaViva())&&(negras.getRey().estaViva())&&!(Ajedrez.finalizado)){
 			return false;
 		}else {
 			return true;
 		}
 	}
 	
+	public static void setFinalizado(Boolean v) {
+		Ajedrez.finalizado = v;
+	}
+	
+	
 	public Equipo darTurno(Tablero tablero, Equipo equipo) {
+		for (IJuegoListener escuchador : juegoListener) {
+			escuchador.turnoActual(equipo);
+		}
 		System.out.println("Cediendo turno...");
 		Equipo.Jugar(equipo);
 		System.out.println("Turno de: " + equipo.getNombre());
@@ -203,5 +213,13 @@ public class Ajedrez implements IJuegoListener{
 
 	public static void setMovimientos(int movimientos) {
 		Ajedrez.movimientos = movimientos;
+	}
+
+	public static boolean getReiniciar() {
+		return Ajedrez.reiniciar;
+	}
+
+	public static void setReiniciar(boolean reiniciar) {
+		Ajedrez.reiniciar = reiniciar;
 	}
 }

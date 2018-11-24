@@ -14,23 +14,7 @@ public class Torre extends Pieza{
 		}
 	}
 
-	
-	/*public void moverse(Celda nuevaCelda){ 
-		if(this.movimientoDentroDelTablero(nuevaCelda.getFila(), nuevaCelda.getColumna())) {//VERIFICO QUE EL NUEVO MOVIMINETO SE ENCUENTRE DENTRO DEL TABLERO
-			if(this.movimientoValido(nuevaCelda)) {//VERIFICO QUE EL MOVIMIENTO CORRESPONDA
-				if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
-					if(!nuevaCelda.estaOcupadaPorElMismoEquipo(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNA DE MIS PIEZAS
-						nuevaCelda.getPieza().morir();
-						System.out.println("La Torre de "+ this.getEquipo().getNombre()+"comi� la pieza de " + nuevaCelda.getPieza().getNombreEquipoContrario()+".");
-						this.setCelda(nuevaCelda);		
-					}else{//LA CELDA PUEDE ESTAR DESOCUPADA
-						this.setCelda(nuevaCelda);
-						System.out.println("La Torre se movi�.");
-					}
-				}	
-			}
-		}
-	}*/
+
 	
 	public boolean movimientoValido(Celda nuevaCelda) {
 		if (((this.getCelda().getFila()==nuevaCelda.getFila()))||(this.getCelda().getColumna()==nuevaCelda.getColumna())){
@@ -86,9 +70,4 @@ public class Torre extends Pieza{
 
 
 	
-	
-	/*@Override
-	public String toString() {
-		return "T" + super.toString();
-	}*/
 }

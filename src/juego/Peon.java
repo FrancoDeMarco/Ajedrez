@@ -66,23 +66,4 @@ public class Peon extends Pieza{
 	}
 	
 	
-	
-	/*public void moverse(Celda nuevaCelda){ 
-		if(this.movimientoDentroDelTablero(nuevaCelda.getFila(), nuevaCelda.getColumna())) {//VERIFICO QUE EL NUEVO MOVIMINETO SE ENCUENTRE DENTRO DEL TABLERO
-			if(this.movimientoValido(nuevaCelda)) {//VERIFICO QUE EL MOVIMIENTO CORRESPONDA
-				if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
-					nuevaCelda.getPieza().morir();
-					System.out.println("El peon de "+ this.getEquipo().getNombre()+"comi� la pieza de " + nuevaCelda.getPieza().getNombreEquipoContrario()+".");
-					this.setCelda(nuevaCelda);		
-				}else{//LA CELDA PUEDE ESTAR DESOCUPADA
-					this.setCelda(nuevaCelda);
-					System.out.println("El peon se movio.");
-				}
-			}
-		}
-	}
-	/*@Override
-	public String toString() {
-		return "P" + super.toString();
-	}*/
 }

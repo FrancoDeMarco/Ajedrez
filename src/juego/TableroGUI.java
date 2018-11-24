@@ -32,6 +32,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	private JButton btnPiezasNegrasComidas;
 	private JButton btnPiezasBlancasComidas;
 	private JButton btnMovimientos;
+	private JButton btnTurno;
 	
 	/**
 	 * Launch the application.
@@ -124,12 +125,18 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		menuBar.add(mnIniciarJuego);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Iniciar");
+		
 		mnIniciarJuego.add(mntmNewMenuItem);
 		
 		JMenuItem mntmReiniciar = new JMenuItem("Reiniciar");
 		mnIniciarJuego.add(mntmReiniciar);
 		
 		JMenuItem mntmFinalizar = new JMenuItem("Finalizar");
+		mntmFinalizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Ajedrez.setFinalizado(true);
+			}
+		});
 		mnIniciarJuego.add(mntmFinalizar);
 		
 		JMenuItem mntmSalir = new JMenuItem("Salir");
@@ -172,11 +179,14 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		});
 		menuBar.add(btnMovimientos);
 		
-		JButton btnTurnoBlancas = new JButton("Turno Blancas");
-		menuBar.add(btnTurnoBlancas);
 		
-		JButton btnTurnoNegras = new JButton("Turno Negras");
-		menuBar.add(btnTurnoNegras);
+		
+		this.btnTurno = new JButton("Turno: ");
+		btnTurno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		menuBar.add(btnTurno);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -210,6 +220,15 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 				celdasGUI[i][j].setVisible(true);
 				panel.add(celdasGUI[i][j]);
 			}
+		}
+	}
+
+	@Override
+	public void turnoActual(Equipo equipo) {
+		if(equipo.getNombre()=="Blancas") {
+			this.btnTurno.setText("Turno Blancas");
+		}else{
+			this.btnTurno.setText("Turno Negras");
 		}
 	}
 

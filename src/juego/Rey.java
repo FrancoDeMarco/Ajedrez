@@ -36,25 +36,4 @@ public class Rey extends Pieza{
 	
 	
 	
-	/*public void moverse(Celda nuevaCelda){ 
-		if(this.movimientoDentroDelTablero(nuevaCelda.getFila(), nuevaCelda.getColumna())) {//VERIFICO QUE EL NUEVO MOVIMINETO SE ENCUENTRE DENTRO DEL TABLERO
-			if(this.movimientoValido(nuevaCelda)) {//VERIFICO QUE EL MOVIMIENTO CORRESPONDA
-				if(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
-					if(!nuevaCelda.estaOcupadaPorElMismoEquipo(this.getEquipo())) {//PUEDE ESTAR OCUPADA POR UNA DE MIS PIEZAS
-						nuevaCelda.getPieza().morir();
-						System.out.println("El Rey de "+ this.getEquipo().getNombre()+"comi� la pieza de " + nuevaCelda.getPieza().getNombreEquipoContrario()+".");
-						this.setCelda(nuevaCelda);		
-					}else{//LA CELDA PUEDE ESTAR DESOCUPADA
-						this.setCelda(nuevaCelda);
-						System.out.println("El Rey se movi�.");
-					}
-				}	
-			}
-		}
-	}
-	
-	/*@Override
-	public String toString() {
-		return "R" + super.toString();
-	}*/
 }
