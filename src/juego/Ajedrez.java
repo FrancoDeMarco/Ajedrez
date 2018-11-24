@@ -124,7 +124,7 @@ public class Ajedrez implements IJuegoListener{
 	public void Espera() {
 		System.out.println("\n");
 		try {
-			Thread.sleep(100);
+			Thread.sleep(2000);
 		}catch(Exception e) {
 			System.out.println("\n");
 		}

@@ -153,13 +153,12 @@ public abstract class Pieza{
 				System.out.println("Alguien va a morir");
 				this.getEquipo().getAjedrez().getTablero().getCelda(filaN, columnaN).getPieza().morir();
 				this.getCelda().setPieza(null); //
-				this.setCelda(nuevaCelda);		
-				Ajedrez.incrementarMovimientos();
-
+				this.setCelda(this.getEquipo().getAjedrez().getTablero().getCelda(filaN, columnaN));		
 			}else{//LA CELDA PUEDE ESTAR DESOCUPADA
 				this.getCelda().setPieza(null);
-				this.setCelda(nuevaCelda);
+				this.setCelda(this.getEquipo().getAjedrez().getTablero().getCelda(filaN, columnaN));
 			}
+			Ajedrez.incrementarMovimientos();
 			System.out.println("MOVIMIENTOS: "+ Ajedrez.getMovimientos());
 			System.out.println("Piezas blancas comidas:" + Ajedrez.getPiezasBlancasComidas());
 			System.out.println("Piezas negras comidas:" + Ajedrez.getPiezasNegrasComidas());
