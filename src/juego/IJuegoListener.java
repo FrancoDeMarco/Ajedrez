@@ -16,11 +16,5 @@ public interface IJuegoListener {
 		
 	}
 	
-	public default void turnoActual(Equipo equipo) {
-		
-	}
-	
-	public default void equipoEnJaque(Equipo equipo) {
-		
-	}
+
 }

@@ -124,7 +124,7 @@ public class Ajedrez implements IJuegoListener{
 	public void Espera() {
 		System.out.println("\n");
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(100);
 		}catch(Exception e) {
 			System.out.println("\n");
 		}
@@ -140,7 +140,7 @@ public class Ajedrez implements IJuegoListener{
 				this.darTurno(this.tablero, this.negras);
 			}
 		}
-		System.out.println("FINALIZÓ EL JUEGO");
+		System.out.println("FINALIZA EL JUEGO");
 	}
 	
 	public boolean Finalizar(Equipo blancas, Equipo negras) {

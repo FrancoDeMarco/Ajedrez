@@ -22,13 +22,17 @@ import javax.swing.JMenu;
 import java.awt.Panel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JButton;
 
 public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener {
 
 	private JPanel contentPane;
 	private CeldaGUI[][] celdasGUI=new CeldaGUI[8][8];
-
-
+	private Ajedrez ajedrez;
+	private JButton btnPiezasNegrasComidas;
+	private JButton btnPiezasBlancasComidas;
+	private JButton btnMovimientos;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -72,9 +76,17 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	}
 
 	@Override
-	public void piezaComida(Pieza pieza, Celda celdaOrigen, Celda celdaDestino) {
-
+	public void piezaComida(Pieza pieza) {
+		if(pieza.getEquipo().getNombre()=="Blancas") {
+			this.btnPiezasBlancasComidas.setText("Piezas Blancas Comidas: " + Ajedrez.getPiezasBlancasComidas());
+			this.btnPiezasBlancasComidas.repaint();
+		}else {
+			this.btnPiezasNegrasComidas.setText("Piezas Negras Comidas: " + Ajedrez.getPiezasNegrasComidas());
+			this.btnPiezasNegrasComidas.repaint();
+		}
 	}
+	
+	
 
 	@Override
 	public void piezaMovida(Pieza pieza, Celda celdaOrigen, Celda celdaDestino) {
@@ -83,6 +95,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		this.celdasGUI[celdaOrigen.getFila()][celdaOrigen.getColumna()].repaint();
 		this.celdasGUI[celdaDestino.getFila()][celdaDestino.getColumna()].repaint();
 		this.repaint();
+		this.btnMovimientos.setText("Movimientos: " + Ajedrez.getMovimientos());
 	}
 
 	public CeldaGUI[][] getCeldasGUI() {
@@ -137,6 +150,33 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			}
 		});
 		mnAyuda.add(mntmAcercaDe);
+		
+		this.btnPiezasNegrasComidas = new JButton("Piezas Negras Comidas: "+ Ajedrez.getPiezasNegrasComidas());
+		btnPiezasNegrasComidas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		menuBar.add(btnPiezasNegrasComidas);
+		
+		this.btnPiezasBlancasComidas = new JButton("Piezas Blancas Comidas: " + Ajedrez.getPiezasBlancasComidas());
+		btnPiezasBlancasComidas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		menuBar.add(btnPiezasBlancasComidas);
+		
+		this.btnMovimientos = new JButton("Movimientos: " + Ajedrez.getMovimientos());
+		btnMovimientos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		menuBar.add(btnMovimientos);
+		
+		JButton btnTurnoBlancas = new JButton("Turno Blancas");
+		menuBar.add(btnTurnoBlancas);
+		
+		JButton btnTurnoNegras = new JButton("Turno Negras");
+		menuBar.add(btnTurnoNegras);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

@@ -91,6 +91,9 @@ public abstract class Pieza{
 		}else {
 			Ajedrez.incrementarPiezasNegrasComidas();
 		}
+		for (IPiezaListener escuchador : piezaListeners) {
+			escuchador.piezaComida(this);;
+		}
 	}
 
 	public String getNombreEquipoContrario() {
