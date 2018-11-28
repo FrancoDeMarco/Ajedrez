@@ -3,13 +3,14 @@ package juego;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.plaf.synth.SynthSeparatorUI;
+
 
 public class Alfil extends Pieza{
 	
 
 	public Alfil(Celda celda, Equipo equipo) {
 		super(celda, equipo);
+		//TODO [CORRECCION] Esto no va
 		if(equipo.getNombre() == "Negras") {
 			this.setImagen(new ImageIcon("img/alfilNegro.png"));
 		}else {

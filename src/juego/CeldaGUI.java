@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
@@ -15,9 +15,11 @@ public class CeldaGUI extends JButton{
 	private int fila;
 	private int columna;
 	
+	//TODO [CORRECCION] Falta nivel de accesibiliadd
 	CeldaGUI(Color colorCelda){
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//TODO [CORRECCION] No hacen nada?
 			}
 		});
 		this.setBorder(new LineBorder(Color.DARK_GRAY));
@@ -28,9 +30,7 @@ public class CeldaGUI extends JButton{
 		this.setVisible(true);
 	}
 
-	public void hardcodearImagen() {
-		this.setIcon(new ImageIcon("C:\\Users\\Franco\\eclipse-workspace\\AjedrezV.1\\img\\alfilNegro.png"));
-	}
+	
 	
 	public Icon getImagen() {
 		return imagen;

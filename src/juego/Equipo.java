@@ -13,15 +13,15 @@ public class Equipo {
 		return nombre;
 	}
 
-	public static void Jugar(Equipo equipo) {
-		ArrayList<Jugada> jugadas = equipo.calcularJugadasPosibles();
+	public void jugar() {
+		ArrayList<Jugada> jugadas = this.calcularJugadasPosibles();
 		int x = jugadas.size();
 		int azar = ThreadLocalRandom.current().nextInt(0,x);
-		Jugada jugada = jugadas.get(azar); //TODO
+		Jugada jugada = jugadas.get(azar);
 		System.out.println("jugada: "+jugada);
-		System.out.println("Antes de ejecutar: Fila: " +  equipo.getRey().getCelda().getFila()+" ; Columna: " + equipo.getRey().getCelda().getColumna());
-		ejecutar(jugada);
-		System.out.println("Despues de ejecutar: Fila: "+ equipo.getRey().getCelda().getFila()+" ; Columna: " + equipo.getRey().getCelda().getColumna());
+		System.out.println("Antes de ejecutar: Fila: " +  this.getRey().getCelda().getFila()+" ; Columna: " + this.getRey().getCelda().getColumna());
+		this.ejecutar(jugada);
+		System.out.println("Despues de ejecutar: Fila: "+ this.getRey().getCelda().getFila()+" ; Columna: " + this.getRey().getCelda().getColumna());
 	}
 
 	public Equipo(String nombre, Ajedrez ajedrez) {
@@ -30,7 +30,8 @@ public class Equipo {
 		this.estaEnJaque = false;
 	}
 	
-	public static void ejecutar(Jugada jugada) {
+	//TODO {CORREGIDO}[CORRECCION] No puede ser un metodo de clase 
+	public void ejecutar(Jugada jugada) {
 		System.out.println("La pieza está en la fila "+ jugada.getPieza().getCelda().getFila() + " columna " + jugada.getPieza().getCelda().getColumna());
 		jugada.getPieza().moverse(new Celda(jugada.getFila(), jugada.getColumna()));
 		System.out.println("La pieza pasó a la fila "+ jugada.getPieza().getCelda().getFila() + " columna " + jugada.getPieza().getCelda().getColumna());

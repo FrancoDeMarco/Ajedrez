@@ -2,23 +2,28 @@ package juego;
 
 import java.util.ArrayList;
 
-public class Ajedrez implements IJuegoListener{
-	
+//TODO {CORREGIDO} [CORRECCION] Para que Ajedrez implementa IJuegoListener?, 
+public class Ajedrez{
 	private Tablero tablero;
 	private Equipo blancas;
 	private Equipo negras;
 	public static final String BLANCAS = "Blancas";
 	public static final String NEGRAS = "Negras";
-	private ArrayList<Pieza> piezasBlancas = new ArrayList<Pieza>();
-	private ArrayList<Pieza> piezasNegras = new ArrayList<Pieza>();
+	
+	//TODO {CORREGIDO}[CORRECCION] Las piezas son de cada equipo, no del Ajedrez
+
+	
 	public ArrayList<IJuegoListener> juegoListener = new ArrayList<IJuegoListener>();
 	private static Ajedrez instancia = new Ajedrez();
-	private TableroGUI tableroGUI;
-	private static int movimientos = 0;
-	private static int piezasBlancasComidas = 0;
-	private static int piezasNegrasComidas = 0;
-	private static boolean finalizado = false;
-	private static boolean reiniciar = false;
+	
+	//TODO {CORREGIDO}[CORRECCION] El Ajedrez no puede tener una referencia al TableroGUI
+	
+	//TODO {CORREGIDO}[CORRECCION] Estas variables no pueden ser de clase 
+	private int movimientos = 0;
+	private int piezasBlancasComidas = 0;
+	private int piezasNegrasComidas = 0;
+	private boolean finalizado = false;
+	private boolean reiniciar = false;
 	
 	
 	public void IniciarJuego() {
@@ -26,27 +31,38 @@ public class Ajedrez implements IJuegoListener{
 		tablero.crearCeldas(); 
 		this.negras = new Equipo(NEGRAS, this);
 		this.blancas = new Equipo(BLANCAS, this);
-		this.tableroGUI = new TableroGUI();
-		tableroGUI.setVisible(true);
-		this.juegoListener.add(tableroGUI);
+		//TODO {CORREGIDO}[CORRECCION] Desde Ajedrez, no puede existir nada referente a la interfaz grafica.
 		this.crearPiezas();
+	}
+	
+	public void agregarJuegoListener(IJuegoListener escuchador) {
+		this.juegoListener.add(escuchador);
+	}
+	
+	public Equipo getEquipoContrario(Equipo equipo) {
+		if (equipo == blancas) {
+			return negras;
+		}else {
+			return blancas;
+		}
 	}
 	
 	public Tablero getTablero() {
 		return tablero;
 	}
 
-	
-	
-	public static String getBlanco() {
-		return BLANCAS;
+	public Equipo getEquipoBlancas() {
+		return this.blancas;
 	}
-
-	public ArrayList<Pieza> getPiezasBlancas() {
-		return piezasBlancas;
+	
+	public Equipo getEquipoNegras() {
+		return this.negras;
 	}
 
 	public void crearPiezas() {
+		
+		ArrayList<Pieza> piezasBlancas = new ArrayList<Pieza>();
+		ArrayList<Pieza> piezasNegras = new ArrayList<Pieza>();
 		
 		Rey rey = new Rey(getCelda(0, 4), blancas);
 		System.out.println(rey.getCelda());
@@ -101,20 +117,10 @@ public class Ajedrez implements IJuegoListener{
 		Torre torre4 = new Torre (getCelda(7, 7), negras);
 		piezasNegras.add(torre4);
 			
-		for (Pieza pieza : piezasBlancas) {
-			pieza.addPiezaListener(this.tableroGUI);
-		}
-		for (Pieza pieza : piezasNegras) {
-			pieza.addPiezaListener(this.tableroGUI);
-		}
 		
 		this.blancas.setPiezas(piezasBlancas);
 		this.negras.setPiezas(piezasNegras);
 		
-
-		for (IJuegoListener escuchador : juegoListener) {
-			escuchador.juegoEmpieza(piezasBlancas, piezasNegras);
-		}
 	
 }
 	
@@ -123,38 +129,45 @@ public class Ajedrez implements IJuegoListener{
 		return this.tablero.getCelda(i, j);
 	}
 
-	public void Espera() {
+	//TODO {CORREGIDO} [CORRECCION] Utilizar notacion camel
+	public void espera() {
 		System.out.println("\n");
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(800);
 		}catch(Exception e) {
 			System.out.println("\n");
 		}
 	}
 	
 	public void Comenzar() {
-		while(!this.Finalizar(this.blancas, this.negras)) {
-			this.Espera();
+		for (IJuegoListener escuchador : this.juegoListener) {
+			escuchador.juegoEmpieza(this.getEquipoBlancas().getPiezas(), this.getEquipoNegras().getPiezas());
+		}
+		while(!this.finalizar()) {
+			this.espera();
 			this.darTurno(this.tablero, this.blancas);
-			this.Espera();
+			this.incrementarMovimientos();
+			this.espera();
 			
-			if(!this.Finalizar(this.negras, this.blancas)) {
+			if(!this.finalizar()) {
 				this.darTurno(this.tablero, this.negras);
 			}
 		}
 		System.out.println("FINALIZA EL JUEGO");
 	}
 	
-	public boolean Finalizar(Equipo blancas, Equipo negras) {
-		if ((blancas.getRey().estaViva())&&(negras.getRey().estaViva())&&!(Ajedrez.finalizado)){
+	//TODO {CORREGIDO}[CORRECCION] Utilizar notacion camel
+	//TODO {CORREGIDO}[CORRECCION] Para que recibe "blancas" y "negras" si el Ajedrez ya las conoce
+	public boolean finalizar() {
+		if ((this.blancas.getRey().estaViva())&&(this.negras.getRey().estaViva())&&!(this.finalizado)){
 			return false;
 		}else {
 			return true;
 		}
 	}
 	
-	public static void setFinalizado(Boolean v) {
-		Ajedrez.finalizado = v;
+	public void setFinalizado(Boolean v) {
+		this.finalizado = v;
 	}
 	
 	
@@ -163,14 +176,25 @@ public class Ajedrez implements IJuegoListener{
 			escuchador.turnoActual(equipo);
 		}
 		System.out.println("Cediendo turno...");
-		Equipo.Jugar(equipo);
+		//TODO {CORREGIDO} [CORRECCION] ?? por que llamar a un metodo de clase para esto?
+		equipo.jugar();
 		System.out.println("Turno de: " + equipo.getNombre());
 		return equipo;
 	}
 	
 	
-	public void getGanador() {
-		
+	public Equipo getGanador() {
+		//TODO {CORREGIDO/usar}[CORRECCION] ???
+		if (!this.blancas.getRey().estaViva()) {
+			return this.negras;
+		}else {
+			if (!this.negras.getRey().estaViva()) {
+				return this.blancas;
+			}
+			else {
+				return null;
+			}
+		}
 	}
 
 	
@@ -178,48 +202,49 @@ public class Ajedrez implements IJuegoListener{
 		return instancia;
 	}	
 	
-	public static void incrementarMovimientos() {
+	//TODO {CORREGIDO}[CORRECCION] Todos estos no pueden ser metodos publicos ni de clase
+	public void incrementarMovimientos() {
 		System.out.println("ENTRE A INCREMENTAR");
-		Ajedrez.setMovimientos(Ajedrez.getMovimientos() + 1);
+		this.setMovimientos(this.getMovimientos() + 1);
 	}
 	
-	public static void incrementarPiezasBlancasComidas() {
-		Ajedrez.setPiezasBlancasComidas(Ajedrez.getPiezasBlancasComidas() + 1);
+	public void incrementarPiezasBlancasComidas() {
+		this.setPiezasBlancasComidas(this.getPiezasBlancasComidas() + 1);
 	}
 	
-	public static void incrementarPiezasNegrasComidas() {
-		Ajedrez.setPiezasNegrasComidas(Ajedrez.getPiezasNegrasComidas() + 1);
+	public void incrementarPiezasNegrasComidas() {
+		this.setPiezasNegrasComidas(this.getPiezasNegrasComidas() + 1);
 	}
 
-	public static int getPiezasBlancasComidas() {
-		return Ajedrez.piezasBlancasComidas;
+	public int getPiezasBlancasComidas() {
+		return this.piezasBlancasComidas;
 	}
 
-	public static void setPiezasBlancasComidas(int piezasBlancasComidas) {
-		Ajedrez.piezasBlancasComidas = piezasBlancasComidas;
+	public void setPiezasBlancasComidas(int piezasBlancasComidas) {
+		this.piezasBlancasComidas = piezasBlancasComidas;
 	}
 
-	public static int getPiezasNegrasComidas() {
-		return Ajedrez.piezasNegrasComidas;
+	public int getPiezasNegrasComidas() {
+		return this.piezasNegrasComidas;
 	}
 
-	public static void setPiezasNegrasComidas(int piezasNegrasComidas) {
-		Ajedrez.piezasNegrasComidas = piezasNegrasComidas;
+	public void setPiezasNegrasComidas(int piezasNegrasComidas) {
+		this.piezasNegrasComidas = piezasNegrasComidas;
 	}
 
-	public static int getMovimientos() {
-		return Ajedrez.movimientos;
+	public int getMovimientos() {
+		return this.movimientos;
 	}
 
-	public static void setMovimientos(int movimientos) {
-		Ajedrez.movimientos = movimientos;
+	public void setMovimientos(int movimientos) {
+		this.movimientos = movimientos;
 	}
 
-	public static boolean getReiniciar() {
-		return Ajedrez.reiniciar;
+	public boolean getReiniciar() {
+		return this.reiniciar;
 	}
 
-	public static void setReiniciar(boolean reiniciar) {
-		Ajedrez.reiniciar = reiniciar;
+	public void setReiniciar(boolean reiniciar) {
+		this.reiniciar = reiniciar;
 	}
 }

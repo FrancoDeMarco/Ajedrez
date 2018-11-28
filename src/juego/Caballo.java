@@ -1,6 +1,6 @@
 package juego;
 
-import java.util.ArrayList;
+
 
 import javax.swing.ImageIcon;
 

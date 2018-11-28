@@ -33,15 +33,13 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	private JButton btnPiezasBlancasComidas;
 	private JButton btnMovimientos;
 	private JButton btnTurno;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
+
+	//TODO {CORREGIDO}[CORRECCION] Tienen 2 main, dejen uno solo
+	public static void Inicializar(Ajedrez ajedrez) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TableroGUI frame = new TableroGUI();
+					TableroGUI frame = new TableroGUI(ajedrez);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,6 +47,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			}
 		});
 	}
+
 
 	@Override
 	public void juegoEmpieza(ArrayList<Pieza> blancas, ArrayList<Pieza> negras) {
@@ -78,11 +77,12 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 
 	@Override
 	public void piezaComida(Pieza pieza) {
-		if(pieza.getEquipo().getNombre()=="Blancas") {
-			this.btnPiezasBlancasComidas.setText("Piezas Blancas Comidas: " + Ajedrez.getPiezasBlancasComidas());
+		//TODO [CORRECCION] No pregunten por el nombre, pregunten por la instancia -> pieza.getEquipo() == ajedrez.getEquipoBlancas()
+		if(pieza.getEquipo()==this.ajedrez.getEquipoBlancas()) {
+			this.btnPiezasBlancasComidas.setText("Piezas Blancas Comidas: " + this.ajedrez.getPiezasBlancasComidas());
 			this.btnPiezasBlancasComidas.repaint();
 		}else {
-			this.btnPiezasNegrasComidas.setText("Piezas Negras Comidas: " + Ajedrez.getPiezasNegrasComidas());
+			this.btnPiezasNegrasComidas.setText("Piezas Negras Comidas: " + this.ajedrez.getPiezasNegrasComidas());
 			this.btnPiezasNegrasComidas.repaint();
 		}
 	}
@@ -96,7 +96,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		this.celdasGUI[celdaOrigen.getFila()][celdaOrigen.getColumna()].repaint();
 		this.celdasGUI[celdaDestino.getFila()][celdaDestino.getColumna()].repaint();
 		this.repaint();
-		this.btnMovimientos.setText("Movimientos: " + Ajedrez.getMovimientos());
+		this.btnMovimientos.setText("Movimientos: " + this.ajedrez.getMovimientos());
 	}
 
 	public CeldaGUI[][] getCeldasGUI() {
@@ -114,7 +114,9 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	/**
 	 * Create the frame.
 	 */
-	public TableroGUI() {
+	public TableroGUI(Ajedrez ajedrez) {
+		
+		this.ajedrez = ajedrez;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 810);
 		
@@ -134,7 +136,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		JMenuItem mntmFinalizar = new JMenuItem("Finalizar");
 		mntmFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Ajedrez.setFinalizado(true);
+				ajedrez.setFinalizado(true);
 			}
 		});
 		mnIniciarJuego.add(mntmFinalizar);
@@ -158,21 +160,23 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		});
 		mnAyuda.add(mntmAcercaDe);
 		
-		this.btnPiezasNegrasComidas = new JButton("Piezas Negras Comidas: "+ Ajedrez.getPiezasNegrasComidas());
+		//TODO [CORRECCION] No pueden ser botones, son labels y no pueden ir en la barra de menu.
+		//Alguna vez vieron un juego que muestre el estado en un "boton" y que ese boton este en la barra de menu?
+		this.btnPiezasNegrasComidas = new JButton("Piezas Negras Comidas: "+ this.ajedrez.getPiezasNegrasComidas());
 		btnPiezasNegrasComidas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		menuBar.add(btnPiezasNegrasComidas);
 		
-		this.btnPiezasBlancasComidas = new JButton("Piezas Blancas Comidas: " + Ajedrez.getPiezasBlancasComidas());
+		this.btnPiezasBlancasComidas = new JButton("Piezas Blancas Comidas: " + this.ajedrez.getPiezasBlancasComidas());
 		btnPiezasBlancasComidas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		menuBar.add(btnPiezasBlancasComidas);
 		
-		this.btnMovimientos = new JButton("Movimientos: " + Ajedrez.getMovimientos());
+		this.btnMovimientos = new JButton("Movimientos: " + this.ajedrez.getMovimientos());
 		btnMovimientos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -221,6 +225,17 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 				panel.add(celdasGUI[i][j]);
 			}
 		}
+		
+		ArrayList<Pieza> piezasBlancas = this.ajedrez.getEquipoBlancas().getPiezas();
+		ArrayList<Pieza> piezasNegras = this.ajedrez.getEquipoNegras().getPiezas();
+		
+		for (Pieza pieza : piezasBlancas) {
+			pieza.addPiezaListener(this);
+		}
+		for (Pieza pieza : piezasNegras) {
+			pieza.addPiezaListener(this);
+		}
+		this.ajedrez.agregarJuegoListener(this);
 	}
 
 	@Override
@@ -232,6 +247,9 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		}
 	}
 
+	//TODO {CORREGIDO}[CORRECCION] No se utiliza nunca esto
+	
+	/*
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -249,4 +267,5 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			}
 		});
 	}
+	*/
 }

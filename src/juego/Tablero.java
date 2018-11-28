@@ -3,11 +3,13 @@ package juego;
 public class Tablero {
 	
 	private Celda[][] celdas;
+	private int cantFilas = 8;
+	private int cantColumnas = 8;
 	
 	
 	
 	public void crearCeldas() {
-		this.celdas = new Celda[8][8];
+		this.celdas = new Celda[this.cantFilas][this.cantColumnas];
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				Celda casillero = new Celda(i, j);
@@ -33,11 +35,7 @@ public class Tablero {
 		System.out.println(tablero);
 	}
 	
-	public void mover(Pieza pieza, int fila, int columna) {
-	/*	this.celda[pieza.getCelda().getFila()] [pieza.getCelda().getColumna()].setPieza(null);//Borro vieja posici�n
-		pieza.setCelda(this.celda[fila][columna]);
-		this.celda[fila][columna].setPieza(pieza);//Agrego nueva posici�n*/
-	}
+	
 
 	
 	public void getPiezas(Equipo equipo) {

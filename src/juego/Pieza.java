@@ -8,15 +8,12 @@ public abstract class Pieza{
 	private Celda nuevaCelda;
 	private Celda celda;
 	private Equipo equipo;
-	private String nombreEquipoContrario;
+	//TODO {CORREGIDO}[CORRECCION] Para esto tenemos el metodo "ajedrez.getEqupioContrario"
 	private boolean estaViva;
 	private ArrayList<IPiezaListener> piezaListeners;
-	private Icon imagen;
+	private Icon imagen; //TODO [CORRECCION] No puede haber nada de interfaz gráfica aca
 
-	public void getMovimientosPosibles() {
-		//ArrayList<Celda>
-		
-	}
+	
 	
 	public ArrayList<Celda> getCeldasPosibles() {
 		ArrayList<Celda> celdasPosibles = new ArrayList<Celda>();
@@ -33,9 +30,10 @@ public abstract class Pieza{
 	
 	public abstract boolean movimientoValido(Celda nuevaCelda);
 	
-
-	
 	public boolean movimientoDentroDelTablero(int fila, int columna) {
+		//TODO [CORRECCION] no utilizar numeros fijos, 
+		// En todo caso consular al tablero la dimension para saber si esta afuera o no 
+		//TODO [CORRECCION] Esto deberia ser responsabilidad del tablero, saber si una fila/columna esta adentro o afuera.
 		if ((fila<0 || fila > 7)&&(columna<0 || columna > 7)) {
 			return false;
 		}else{
@@ -47,7 +45,7 @@ public abstract class Pieza{
 	public Pieza(Celda celda, Equipo equipo){
 		this.celda = celda;
 		this.equipo = equipo;
-		this.setNombreEquipoContrario();;
+		//TODO {CORREGIDO}[CORRECCION] Todos los set, debe tener el parametro que se desea setear
 		this.estaViva = true;
 		this.piezaListeners = new ArrayList<IPiezaListener>();
 		celda.setPieza(this);
@@ -87,26 +85,15 @@ public abstract class Pieza{
 		this.estaViva = false;
 		System.out.println("A punto de incrementar comidas");
 		if (this.getEquipo().getNombre() == "Blancas") {
-			Ajedrez.incrementarPiezasBlancasComidas();
+			this.getEquipo().getAjedrez().incrementarPiezasBlancasComidas();
 		}else {
-			Ajedrez.incrementarPiezasNegrasComidas();
+			this.getEquipo().getAjedrez().incrementarPiezasNegrasComidas();
 		}
 		for (IPiezaListener escuchador : piezaListeners) {
 			escuchador.piezaComida(this);;
 		}
 	}
 
-	public String getNombreEquipoContrario() {
-		return nombreEquipoContrario;
-	}
-
-	public void setNombreEquipoContrario() {
-		if (this.getEquipo().getNombre()=="Blanco") {
-			this.nombreEquipoContrario = "Negro";
-		}else {
-			this.nombreEquipoContrario = "Blanco";
-		}
-	}
 
 	public boolean estaViva() {
 		return this.estaViva;
@@ -114,25 +101,6 @@ public abstract class Pieza{
 
 	public void setEstaViva(boolean estaViva) {
 		this.estaViva = estaViva;
-	}
-
-	/**
-	 * Metodo que indica si la pieza se puede mover
-	 * @return
-	 */
-	public boolean tieneJugada() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	/**
-	 * Metodo que indica si la pieza puede matar a otra
-	 * @return
-	 */
-	public boolean puedeMatar() {
-		
-		
-		return false;
 	}
 
 	public Icon getImagen() {
@@ -151,7 +119,7 @@ public abstract class Pieza{
 	public void moverse(Celda nuevaCelda){ 
 		int filaN = nuevaCelda.getFila();
 		int columnaN = nuevaCelda.getColumna();
-		if(this.movimientoDentroDelTablero(nuevaCelda.getFila(), nuevaCelda.getColumna())) {//VERIFICO QUE EL NUEVO MOVIMINETO SE ENCUENTRE DENTRO DEL TABLERO
+		if(this.movimientoDentroDelTablero(nuevaCelda.getFila(), nuevaCelda.getColumna())) {//VERIFICO QUE EL NUEVO MOVIMIENTO SE ENCUENTRE DENTRO DEL TABLERO
 			if(this.getEquipo().getAjedrez().getTablero().getCelda(filaN, columnaN).getPieza() != null) {//PUEDE ESTAR OCUPADA POR UNO DEL EQUIPO CONTRARIO
 				System.out.println("Alguien va a morir");
 				this.getEquipo().getAjedrez().getTablero().getCelda(filaN, columnaN).getPieza().morir();
@@ -161,10 +129,7 @@ public abstract class Pieza{
 				this.getCelda().setPieza(null);
 				this.setCelda(this.getEquipo().getAjedrez().getTablero().getCelda(filaN, columnaN));
 			}
-			Ajedrez.incrementarMovimientos();
-			System.out.println("MOVIMIENTOS: "+ Ajedrez.getMovimientos());
-			System.out.println("Piezas blancas comidas:" + Ajedrez.getPiezasBlancasComidas());
-			System.out.println("Piezas negras comidas:" + Ajedrez.getPiezasNegrasComidas());
+			//TODO {CORREGIDO}[CORRECCION] La cantidad de movimientos realizados deberia controlarlo el Ajedrez, no la pieza
 		}
 	}
 	

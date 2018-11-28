@@ -18,7 +18,7 @@ public class Peon extends Pieza{
 		}
 	}
 	
-	public boolean movimientoValido(Celda nuevaCelda) {//EL PEON SOLO SE MUEVE DE A UNA CASILLA PERO ME FALTA QUE COMA, QUE SE MUEVA DE A DOS EL PRIMER MOVIMIENTO
+	public boolean movimientoValido(Celda nuevaCelda) {
 		int aux;
 		if(this.seMovio) {
 			if (this.getEquipo().getNombre() == "Negras") {

@@ -23,10 +23,7 @@ public class Celda {
 	}
 	
 	
-	public boolean puedeIngresar(/*pieza*/) {
-		return false;
-		
-	}
+	
 	
 	public void setPieza(Pieza pieza) {
 		this.pieza = pieza;

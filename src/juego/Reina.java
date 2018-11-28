@@ -8,6 +8,7 @@ public class Reina extends Pieza{
 
 	public Reina(Celda celda, Equipo equipo) {
 		super(celda, equipo);
+		//TODO [CORRECCION] Esto no va 
 		if(equipo.getNombre() == "Negras") {
 			this.setImagen(new ImageIcon("img/reinaNegra.png"));
 		}else {
@@ -16,6 +17,7 @@ public class Reina extends Pieza{
 	}
 	
 	
+	//TODO [CORRECCION] Generar codigo mas legible
 
  	public boolean movimientoValido(Celda nuevaCelda) {//EL MOVIMIENTO DE LA REINA ES UNA COMBINACION ENTRE EL ALFIL Y LA TORRE
 		int filaN = nuevaCelda.getFila();
