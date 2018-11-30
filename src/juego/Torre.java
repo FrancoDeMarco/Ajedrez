@@ -7,11 +7,6 @@ public class Torre extends Pieza{
 
 	public Torre(Celda celda, Equipo equipo) {
 		super(celda, equipo);
-		if(equipo.getNombre() == "Negras") {
-			this.setImagen(new ImageIcon("img/torreNegra.png"));
-		}else {
-			this.setImagen(new ImageIcon("img/torreBlanca.png"));
-		}
 	}
 
 

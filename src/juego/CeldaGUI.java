@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
-
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
@@ -24,9 +24,9 @@ public class CeldaGUI extends JButton{
 		});
 		this.setBorder(new LineBorder(Color.DARK_GRAY));
 		this.setBackground(colorCelda);
-		this.setMaximumSize(new Dimension(64, 64));
-		this.setMinimumSize(new Dimension(64, 64));
-		this.setPreferredSize(new Dimension(40, 40));
+		this.setMaximumSize(new Dimension(10, 10));
+		this.setMinimumSize(new Dimension(10, 10));
+		this.setPreferredSize(new Dimension(10, 10));
 		this.setVisible(true);
 	}
 
@@ -36,9 +36,17 @@ public class CeldaGUI extends JButton{
 		return imagen;
 	}
 
-	public void setImagen(Icon icono) {
-		this.setIcon(icono);
-		this.repaint();
+	public void setImagen(Pieza pieza) {	
+		if (pieza != null) {
+			String tipoPieza = pieza.toString();
+			String [] textoDividido = tipoPieza.split("@");
+			textoDividido = textoDividido[0].split("\\.");
+			tipoPieza = textoDividido[1];
+			this.setIcon(new ImageIcon("img/"+pieza.getEquipo().getNombre()+"/"+tipoPieza+".png"));
+			this.repaint();
+		}else {
+			this.setIcon(null);
+		}
 	}
 
 	public int getFila() {

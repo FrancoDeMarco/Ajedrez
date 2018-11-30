@@ -9,11 +9,6 @@ public class Caballo extends Pieza{
 
 	public Caballo(Celda celda, Equipo equipo) {
 		super(celda, equipo);
-		if(equipo.getNombre() == "Negras") {
-			this.setImagen(new ImageIcon("img/caballoNegro.png"));
-		}else {
-			this.setImagen(new ImageIcon("img/caballoBlanco.png"));
-		}
 	}
 
 	public boolean movimientoValido(Celda nuevaCelda) {//VALIDA EL MOVIMIENTO DEL CABALLO

@@ -10,8 +10,8 @@ public class Tablero {
 	
 	public void crearCeldas() {
 		this.celdas = new Celda[this.cantFilas][this.cantColumnas];
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		for (int i = 0; i < this.cantFilas; i++) {
+			for (int j = 0; j < this.cantColumnas; j++) {
 				Celda casillero = new Celda(i, j);
 				this.celdas[i][j] = casillero;
 			}
@@ -35,7 +35,16 @@ public class Tablero {
 		System.out.println(tablero);
 	}
 	
-	
+	public boolean movimientoDentroDelTablero(int fila, int columna) {
+		//TODO {CORREGIDO}[CORRECCION] no utilizar numeros fijos, 
+		// En todo caso consular al tablero la dimension para saber si esta afuera o no 
+		//TODO {CORREGIDO}[CORRECCION] Esto deberia ser responsabilidad del tablero, saber si una fila/columna esta adentro o afuera.
+		if ((fila<0 || fila > this.cantFilas-1)&&(columna<0 || columna > this.cantColumnas-1)) {
+			return false;
+		}else{
+			return true;
+		}
+	}	
 
 	
 	public void getPiezas(Equipo equipo) {

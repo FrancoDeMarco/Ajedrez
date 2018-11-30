@@ -11,11 +11,6 @@ public class Peon extends Pieza{
 	public Peon(Celda celda, Equipo equipo) {
 		super(celda, equipo);
 		this.seMovio = false;
-		if(equipo.getNombre() == "Negras") {
-			this.setImagen(new ImageIcon("img/peonNegro.png"));
-		}else {
-			this.setImagen(new ImageIcon("img/peonBlanco.png"));
-		}
 	}
 	
 	public boolean movimientoValido(Celda nuevaCelda) {

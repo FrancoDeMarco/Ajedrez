@@ -24,7 +24,8 @@ public class Ajedrez{
 	private int piezasNegrasComidas = 0;
 	private boolean finalizado = false;
 	private boolean reiniciar = false;
-	
+	private boolean iniciar = false;
+
 	
 	public void IniciarJuego() {
 		this.tablero = new Tablero();

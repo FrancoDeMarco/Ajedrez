@@ -10,12 +10,7 @@ public class Alfil extends Pieza{
 
 	public Alfil(Celda celda, Equipo equipo) {
 		super(celda, equipo);
-		//TODO [CORRECCION] Esto no va
-		if(equipo.getNombre() == "Negras") {
-			this.setImagen(new ImageIcon("img/alfilNegro.png"));
-		}else {
-			this.setImagen(new ImageIcon("img/alfilBlanco.png"));
-		}
+		//TODO {CORREGIDO}[CORRECCION] Esto no va
 	}
 
 	//VALIDO QUE EL MOVIMIENTO CORRESPONDA A LA PIEZA

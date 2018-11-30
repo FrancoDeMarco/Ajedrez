@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JPopupMenu;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -23,16 +24,20 @@ import java.awt.Panel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener {
 
 	private JPanel contentPane;
 	private CeldaGUI[][] celdasGUI=new CeldaGUI[8][8];
 	private Ajedrez ajedrez;
-	private JButton btnPiezasNegrasComidas;
-	private JButton btnPiezasBlancasComidas;
-	private JButton btnMovimientos;
-	private JButton btnTurno;
+	private final JLabel label = new JLabel("");
+	private JLabel lblPiezasBlancasComidas;
+	private JLabel lblMovimientos;
+	private JLabel lblTurno;
+	private JLabel lblPiezasNegrasComidas;
+
 
 	//TODO {CORREGIDO}[CORRECCION] Tienen 2 main, dejen uno solo
 	public static void Inicializar(Ajedrez ajedrez) {
@@ -58,7 +63,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			int fila = celda.getFila();
 			int columna = celda.getColumna();
 			
-			this.getCeldaXY(fila, columna).setImagen(pieza.getImagen());;
+			this.getCeldaXY(fila, columna).setImagen(pieza);;
 			this.getCeldaXY(fila, columna).repaint();
 			this.repaint();
 			
@@ -68,7 +73,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			int fila = celda.getFila();
 			int columna = celda.getColumna();
 			
-			this.getCeldaXY(fila, columna).setImagen(pieza.getImagen());;
+			this.getCeldaXY(fila, columna).setImagen(pieza);;
 			this.getCeldaXY(fila, columna).repaint();
 			this.repaint();
 			
@@ -79,11 +84,11 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	public void piezaComida(Pieza pieza) {
 		//TODO [CORRECCION] No pregunten por el nombre, pregunten por la instancia -> pieza.getEquipo() == ajedrez.getEquipoBlancas()
 		if(pieza.getEquipo()==this.ajedrez.getEquipoBlancas()) {
-			this.btnPiezasBlancasComidas.setText("Piezas Blancas Comidas: " + this.ajedrez.getPiezasBlancasComidas());
-			this.btnPiezasBlancasComidas.repaint();
+			this.lblPiezasBlancasComidas.setText("Piezas Blancas Comidas: " + this.ajedrez.getPiezasBlancasComidas() +"       ");
+			this.lblPiezasBlancasComidas.repaint();
 		}else {
-			this.btnPiezasNegrasComidas.setText("Piezas Negras Comidas: " + this.ajedrez.getPiezasNegrasComidas());
-			this.btnPiezasNegrasComidas.repaint();
+			this.lblPiezasNegrasComidas.setText("Piezas Negras Comidas: " + this.ajedrez.getPiezasNegrasComidas() +"       ");
+			this.lblPiezasNegrasComidas.repaint();
 		}
 	}
 	
@@ -92,11 +97,11 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	@Override
 	public void piezaMovida(Pieza pieza, Celda celdaOrigen, Celda celdaDestino) {
 		this.celdasGUI[celdaOrigen.getFila()][celdaOrigen.getColumna()].setImagen(null);
-		this.celdasGUI[celdaDestino.getFila()][celdaDestino.getColumna()].setImagen(pieza.getImagen());
+		this.celdasGUI[celdaDestino.getFila()][celdaDestino.getColumna()].setImagen(pieza);
 		this.celdasGUI[celdaOrigen.getFila()][celdaOrigen.getColumna()].repaint();
 		this.celdasGUI[celdaDestino.getFila()][celdaDestino.getColumna()].repaint();
 		this.repaint();
-		this.btnMovimientos.setText("Movimientos: " + this.ajedrez.getMovimientos());
+		this.lblMovimientos.setText("Movimientos: " + this.ajedrez.getMovimientos()+"       ");
 	}
 
 	public CeldaGUI[][] getCeldasGUI() {
@@ -118,7 +123,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		
 		this.ajedrez = ajedrez;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 810);
+		setBounds(100, 100, 800, 850);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -159,38 +164,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			}
 		});
 		mnAyuda.add(mntmAcercaDe);
-		
-		//TODO [CORRECCION] No pueden ser botones, son labels y no pueden ir en la barra de menu.
-		//Alguna vez vieron un juego que muestre el estado en un "boton" y que ese boton este en la barra de menu?
-		this.btnPiezasNegrasComidas = new JButton("Piezas Negras Comidas: "+ this.ajedrez.getPiezasNegrasComidas());
-		btnPiezasNegrasComidas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		menuBar.add(btnPiezasNegrasComidas);
-		
-		this.btnPiezasBlancasComidas = new JButton("Piezas Blancas Comidas: " + this.ajedrez.getPiezasBlancasComidas());
-		btnPiezasBlancasComidas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		menuBar.add(btnPiezasBlancasComidas);
-		
-		this.btnMovimientos = new JButton("Movimientos: " + this.ajedrez.getMovimientos());
-		btnMovimientos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		menuBar.add(btnMovimientos);
-		
-		
-		
-		this.btnTurno = new JButton("Turno: ");
-		btnTurno.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		menuBar.add(btnTurno);
+		menuBar.add(label);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -200,6 +174,35 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		contentPane.add(panel, BorderLayout.CENTER);
 		
 		panel.setLayout(new GridLayout(8, 8, 0, 0));
+		
+		Panel panel_1 = new Panel();
+		contentPane.add(panel_1, BorderLayout.NORTH);
+		
+		this.lblPiezasNegrasComidas = new JLabel("Piezas Negras Comidas: 0       " );
+		panel_1.add(lblPiezasNegrasComidas);
+		
+		this.lblPiezasNegrasComidas.setMaximumSize(new Dimension(10, 10));
+		this.lblPiezasNegrasComidas.setMinimumSize(new Dimension(10, 10));
+		
+		this.lblTurno = new JLabel("Turno:          ");
+		panel_1.add(lblTurno);
+		
+				
+				this.lblTurno.setMaximumSize(new Dimension(10, 10));
+				this.lblTurno.setMinimumSize(new Dimension(10, 10));
+				
+				this.lblMovimientos = new JLabel("Movimientos:  0       ");
+				panel_1.add(lblMovimientos);
+				
+				this.lblMovimientos.setBounds(10, 10, 10, 10);
+				
+				this.lblPiezasBlancasComidas = new JLabel("Piezas Blancas Comidas: 0        ");
+				panel_1.add(lblPiezasBlancasComidas);
+				lblPiezasBlancasComidas.setHorizontalAlignment(SwingConstants.CENTER);
+				
+				this.lblPiezasBlancasComidas.setMaximumSize(new Dimension(10, 10));
+				this.lblPiezasBlancasComidas.setMinimumSize(new Dimension(10, 10));
+		
 		for(int i=0;i<=7;i++) {
 			for(int j=0;j<=7;j++) {
 				if(i==0 || i%2==0) {
@@ -241,9 +244,9 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	@Override
 	public void turnoActual(Equipo equipo) {
 		if(equipo.getNombre()=="Blancas") {
-			this.btnTurno.setText("Turno Blancas");
+			this.lblTurno.setText("Turno Blancas       ");
 		}else{
-			this.btnTurno.setText("Turno Negras");
+			this.lblTurno.setText("Turno Negras       ");
 		}
 	}
 

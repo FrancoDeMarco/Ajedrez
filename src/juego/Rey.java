@@ -7,11 +7,6 @@ public class Rey extends Pieza{
 
 	public Rey(Celda celda, Equipo equipo) {
 		super(celda, equipo);
-		if(equipo.getNombre() == "Negras") {
-			this.setImagen(new ImageIcon("img/reyNegro.png"));
-		}else {
-			this.setImagen(new ImageIcon("img/reyBlanco.png"));
-		}
 	}
 
 	public boolean movimientoValido(Celda nuevaCelda) {
