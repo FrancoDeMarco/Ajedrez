@@ -10,11 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import javax.swing.JMenuBar;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
@@ -23,7 +19,6 @@ import javax.swing.JMenu;
 import java.awt.Panel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -56,6 +51,22 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 
 	@Override
 	public void juegoEmpieza(ArrayList<Pieza> blancas, ArrayList<Pieza> negras) {
+		ArrayList<Pieza> piezasBlancas = this.ajedrez.getEquipoBlancas().getPiezas();
+		ArrayList<Pieza> piezasNegras = this.ajedrez.getEquipoNegras().getPiezas();
+		
+		for (Pieza pieza : piezasBlancas) {
+			pieza.addPiezaListener(this);
+		}
+		for (Pieza pieza : piezasNegras) {
+			pieza.addPiezaListener(this);
+		}
+		
+		for (CeldaGUI[] arregloCeldas : this.celdasGUI) {
+			for (CeldaGUI celda : arregloCeldas) {
+				celda.setIcon(null);	//limpia todo el tablero gráfico
+			}
+		}
+		
 		CeldaGUI[][] celdas = this.getCeldasGUI();
 		System.out.println(celdas);
 		for (Pieza pieza : blancas) {
@@ -122,6 +133,8 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 	public TableroGUI(Ajedrez ajedrez) {
 		
 		this.ajedrez = ajedrez;
+		this.ajedrez.agregarJuegoListener(this);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 850);
 		
@@ -132,10 +145,28 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		menuBar.add(mnIniciarJuego);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Iniciar");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ajedrez.setIniciado(true);
+			}
+		});
 		
 		mnIniciarJuego.add(mntmNewMenuItem);
 		
 		JMenuItem mntmReiniciar = new JMenuItem("Reiniciar");
+		mntmReiniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ajedrez.setFinalizado(true);
+				try {
+					Thread.sleep(100); //Sleep para que los elementos gráficos carguen correctamente
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				ajedrez.setReiniciado(true);
+			}
+		});
+		
+		
 		mnIniciarJuego.add(mntmReiniciar);
 		
 		JMenuItem mntmFinalizar = new JMenuItem("Finalizar");
@@ -228,17 +259,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 				panel.add(celdasGUI[i][j]);
 			}
 		}
-		
-		ArrayList<Pieza> piezasBlancas = this.ajedrez.getEquipoBlancas().getPiezas();
-		ArrayList<Pieza> piezasNegras = this.ajedrez.getEquipoNegras().getPiezas();
-		
-		for (Pieza pieza : piezasBlancas) {
-			pieza.addPiezaListener(this);
-		}
-		for (Pieza pieza : piezasNegras) {
-			pieza.addPiezaListener(this);
-		}
-		this.ajedrez.agregarJuegoListener(this);
+		System.out.println("FIN creacion tablero");
 	}
 
 	@Override

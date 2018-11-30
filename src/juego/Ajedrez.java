@@ -23,11 +23,24 @@ public class Ajedrez{
 	private int piezasBlancasComidas = 0;
 	private int piezasNegrasComidas = 0;
 	private boolean finalizado = false;
-	private boolean reiniciar = false;
-	private boolean iniciar = false;
+	private boolean reiniciado = false;
+	private boolean iniciado = false;
 
 	
 	public void IniciarJuego() {
+		this.tablero = new Tablero();
+		tablero.crearCeldas(); 
+		this.negras = new Equipo(NEGRAS, this);
+		this.blancas = new Equipo(BLANCAS, this);
+		//TODO {CORREGIDO}[CORRECCION] Desde Ajedrez, no puede existir nada referente a la interfaz grafica.
+		this.crearPiezas();
+	}
+	
+	public void reiniciarJuego() {
+		System.out.println("entro en reiniciar************************");
+		this.movimientos = 0;
+		this.piezasBlancasComidas = 0;
+		this.piezasNegrasComidas = 0;
 		this.tablero = new Tablero();
 		tablero.crearCeldas(); 
 		this.negras = new Equipo(NEGRAS, this);
@@ -241,11 +254,19 @@ public class Ajedrez{
 		this.movimientos = movimientos;
 	}
 
-	public boolean getReiniciar() {
-		return this.reiniciar;
+	public boolean isReiniciado() {
+		return this.reiniciado;
 	}
 
-	public void setReiniciar(boolean reiniciar) {
-		this.reiniciar = reiniciar;
+	public void setReiniciado(boolean reiniciar) {
+		this.reiniciado = reiniciar;
+	}
+
+	public boolean isIniciado() {
+		return iniciado;
+	}
+
+	public void setIniciado(boolean iniciar) {
+		this.iniciado = iniciar;
 	}
 }
