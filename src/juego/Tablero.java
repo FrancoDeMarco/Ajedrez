@@ -7,7 +7,9 @@ public class Tablero {
 	private int cantColumnas = 8;
 	
 	
-	
+	/**
+	 * Crea las celdas del tablero.
+	 */
 	public void crearCeldas() {
 		this.celdas = new Celda[this.cantFilas][this.cantColumnas];
 		for (int i = 0; i < this.cantFilas; i++) {
@@ -35,6 +37,13 @@ public class Tablero {
 		System.out.println(tablero);
 	}
 	
+	
+	/**
+	 * Revisa que los movimiento se hagan dentro del tablero.
+	 * @param fila
+	 * @param columna
+	 * @return
+	 */
 	public boolean movimientoDentroDelTablero(int fila, int columna) {
 		//TODO {CORREGIDO}[CORRECCION] no utilizar numeros fijos, 
 		// En todo caso consular al tablero la dimension para saber si esta afuera o no 

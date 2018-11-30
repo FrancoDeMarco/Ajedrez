@@ -9,6 +9,11 @@ public class Rey extends Pieza{
 		super(celda, equipo);
 	}
 
+	
+	/**
+	 * Revisa que los movimientos del Rey sean validos.
+	 * Como el Rey solo se mueve de a una casilla no es necesario que revisemos si saltea piezas.
+	 */
 	public boolean movimientoValido(Celda nuevaCelda) {
 		if(((Math.abs(this.getCelda().getFila() - nuevaCelda.getFila()))<=1)&&
 			(Math.abs(this.getCelda().getColumna() - nuevaCelda.getColumna())<=1)&&

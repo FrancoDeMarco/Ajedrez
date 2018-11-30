@@ -12,8 +12,13 @@ public class Reina extends Pieza{
 	}
 	
 	
-	//TODO {CORREGIDO}[CORRECCION] Generar codigo mas legible
+	//TODO {CORREGIDO}[CORRECCION] Generar codigo mas legible.
 
+	
+	/**
+	 * El movimiento de la Reina es una combinación de la Torre y el Alfil.
+	 * 
+	 */
  	public boolean movimientoValido(Celda nuevaCelda) {//EL MOVIMIENTO DE LA REINA ES UNA COMBINACION ENTRE EL ALFIL Y LA TORRE
 		int filaN = nuevaCelda.getFila();
 		int columnaN = nuevaCelda.getColumna();
@@ -29,7 +34,16 @@ public class Reina extends Pieza{
 		}
 	}
 	
- 	//Chequea los movimientos diagonales del mismo modo que el alfil
+ 	/**
+ 	 * Este método chequea los movimientos diagonales del mismo modo que el alfil.
+ 	 * 
+ 	 * @param nuevaCelda
+ 	 * @param columnaV
+ 	 * @param columnaN
+ 	 * @param filaV
+ 	 * @param filaN
+ 	 * @return
+ 	 */
 	public boolean chequeoDiagonal(Celda nuevaCelda, int columnaV, int columnaN, int filaV, int filaN){
 		if (!nuevaCelda.estaOcupadaPorElMismoEquipo(this.getEquipo())) {
 			int i = 0;
@@ -74,7 +88,15 @@ public class Reina extends Pieza{
         }
 	}
 
- 	//Chequea los movimientos horizontales del mismo modo que la torre
+ 	/**
+ 	 * Chequea los movimientos horizontales del mismo modo que la torre.
+ 	 * @param nuevaCelda
+ 	 * @param columnaV
+ 	 * @param columnaN
+ 	 * @param filaV
+ 	 * @param filaN
+ 	 * @return
+ 	 */
 	public boolean chequeoHorizontal(Celda nuevaCelda, int columnaV, int columnaN, int filaV, int filaN){
 		if (((this.getCelda().getFila()==nuevaCelda.getFila()))||(this.getCelda().getColumna()==nuevaCelda.getColumna())){
 			if (!nuevaCelda.estaOcupadaPorElMismoEquipo(this.getEquipo())) {

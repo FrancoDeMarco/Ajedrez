@@ -10,7 +10,10 @@ public class Torre extends Pieza{
 	}
 
 
-	
+	/**
+	 * Revisamos que los movimientos de la Torre sean validos.
+	 * Los for nos permiten ver si hay piezas entre el origen y el destino de la Torre, en caso de haber piezas no se concreta el movmiento.
+	 */
 	public boolean movimientoValido(Celda nuevaCelda) {
 		if (((this.getCelda().getFila()==nuevaCelda.getFila()))||(this.getCelda().getColumna()==nuevaCelda.getColumna())){
 			if (!nuevaCelda.estaOcupadaPorElMismoEquipo(this.getEquipo())) {

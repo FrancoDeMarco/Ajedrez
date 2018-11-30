@@ -12,7 +12,12 @@ public class Peon extends Pieza{
 		super(celda, equipo);
 		this.seMovio = false;
 	}
-	
+	/**
+	 * Valida el movimiento del peón.
+	 * El auxiliar representa la cantidad de movimientos que se harán. Si la pieza ya se movió anteriormente, estos peones se moveran una sola casilla
+	 * y dependiendo si son blancas o negras se moveran 1 (Negra) o -1(blancas) en el tablero. Si es la primera vez que se mueven, se moveran en 
+	 * -2 o 2.
+	 */
 	public boolean movimientoValido(Celda nuevaCelda) {
 		int aux;
 		if(this.seMovio) {
@@ -52,6 +57,11 @@ public class Peon extends Pieza{
 		}
 	}
 
+	
+	/**
+	 * Este metodo sirve para saber si se cumplió el primer movimiento del peón.
+	 * De esta forma sabemos si el peón se puede mover una o dos posiciones.
+	 */
 	@Override
 	public void moverse(Celda nuevaCelda) {
 		super.moverse(nuevaCelda);

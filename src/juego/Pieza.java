@@ -14,7 +14,10 @@ public abstract class Pieza{
 	//TODO {CORREGIDO}[CORRECCION] No puede haber nada de interfaz gráfica aca
 
 	
-	
+	/**
+	 * Devuelve un arreglo de celdas posibles a los que se puede mover la pieza.
+	 * @return
+	 */
 	public ArrayList<Celda> getCeldasPosibles() {
 		ArrayList<Celda> celdasPosibles = new ArrayList<Celda>();
 		Celda[][] celdas = this.getEquipo().getAjedrez().getTablero().getCeldas();
@@ -72,6 +75,9 @@ public abstract class Pieza{
 		this.equipo = equipoMio;
 	}
 	
+	/**
+	 * Mata a la pieza e incrementa las cantidad de piezas comidas al equipo correspondiente.
+	 */
 	public void morir() {
 		this.estaViva = false;
 		System.out.println("A punto de incrementar comidas");
@@ -99,6 +105,12 @@ public abstract class Pieza{
 		
 	}
 
+	/**
+	 * La pieza se mueve.
+	 * Si la celda está ocupada por una pieza del equipo contrario, entonces la pieza que se mueve la mata.
+	 * Si no, solo se mueve, ocupa la nueva celda y la vieja celda queda en null.
+	 * @param nuevaCelda
+	 */
 	public void moverse(Celda nuevaCelda){ 
 		int filaN = nuevaCelda.getFila();
 		int columnaN = nuevaCelda.getColumna();

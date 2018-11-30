@@ -13,6 +13,10 @@ public class Equipo {
 		return nombre;
 	}
 
+	/**
+	 * Calcula las jugadas posibles y las ejecuta.
+	 * Los println fueron en un principio para poder ver si se estaba ejecutando por consola.
+	 */
 	public void jugar() {
 		ArrayList<Jugada> jugadas = this.calcularJugadasPosibles();
 		int x = jugadas.size();
@@ -31,6 +35,11 @@ public class Equipo {
 	}
 	
 	//TODO {CORREGIDO}[CORRECCION] No puede ser un metodo de clase 
+	/**
+	 * Se ejecuta la jugada.
+	 * Los println fueron de nuevo, hechos para ver si se ejecutaba por consola.
+	 * @param jugada
+	 */
 	public void ejecutar(Jugada jugada) {
 		System.out.println("La pieza está en la fila "+ jugada.getPieza().getCelda().getFila() + " columna " + jugada.getPieza().getCelda().getColumna());
 		jugada.getPieza().moverse(new Celda(jugada.getFila(), jugada.getColumna()));
@@ -53,25 +62,26 @@ public class Equipo {
 		return piezas;
 	}
 
+	
+	/**
+	 * Revisa que cada pieza esté viva y si es así devuelve un arreglo de Celdas a las que se puede mover esta.
+	 * Luego, genera una jugada y la guarda en una colleción de jugadas
+	 * Cuando tengo la coleccion de jugadas, verifico cual de todas mata a otra pieza.
+	 * @return
+	 */
 	public ArrayList<Jugada> calcularJugadasPosibles() {
 		
 		ArrayList<Jugada> jugadas = new ArrayList<Jugada>();
 		
 		for (Pieza pieza : this.getPiezas()) {
 			if(pieza.estaViva()) {	
-				ArrayList<Celda> celdasPosibles = pieza.getCeldasPosibles(); //Devuelve un arreglo de Celdas a las que se puede mover la pieza
+				ArrayList<Celda> celdasPosibles = pieza.getCeldasPosibles();
 				for (Celda celda : celdasPosibles) {
 					Jugada jugada = new Jugada(pieza, celda.getFila(), celda.getColumna());
 					jugadas.add(jugada);
 				}
 			}
-			//voy a recorrer las piezas y verificar todas las que tienen jugada, si tiene jugada, 
-			//genero una jugada y la guardo en la collecion de jugadas. 
-			
 		}
-		//cuando tengo la coleccion de jugadas, verifico cual de todas mata a otra pieza.
-		
-		
 		return jugadas;
 	}
 }

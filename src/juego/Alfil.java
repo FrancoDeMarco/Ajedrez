@@ -13,7 +13,12 @@ public class Alfil extends Pieza{
 		//TODO {CORREGIDO}[CORRECCION] Esto no va
 	}
 
-	//VALIDO QUE EL MOVIMIENTO CORRESPONDA A LA PIEZA
+	
+	/**
+	 * Valido el movimiento del alfil.
+	 * Primero me aseguro que el movimiento a hacer corresponda y luego con los "for" me aseguro que no haya ninguna pieza entre el origen y el
+	 * destino del alfil.
+	 */
 	public boolean movimientoValido(Celda nuevaCelda) {
 		int filaN = nuevaCelda.getFila();
 		int columnaN = nuevaCelda.getColumna();
