@@ -23,6 +23,7 @@ public class Prueba {
 				ajedrez.setReiniciado(false);
 			}
 			if (ajedrez.isIniciado()) {
+				ajedrez.reiniciarJuego();
 				ajedrez.setIniciado(false);
 				ajedrez.Comenzar();
 				//TODO {CORREGIDO}[CORRECCION] No puede ser un metodo de clase el "finalizado"

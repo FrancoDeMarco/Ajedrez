@@ -2,6 +2,7 @@ package juego;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
@@ -64,6 +65,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		for (CeldaGUI[] arregloCeldas : this.celdasGUI) {
 			for (CeldaGUI celda : arregloCeldas) {
 				celda.setIcon(null);	//limpia todo el tablero gráfico
+				celda.repaint();
 			}
 		}
 		
@@ -147,7 +149,26 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		JMenuItem mntmNewMenuItem = new JMenuItem("Iniciar");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ajedrez.setIniciado(true);
+				Object[] options = {"PC vs PC",
+                "Jugador vs PC"};
+					Component frame = null;
+					int n = JOptionPane.showOptionDialog(frame,
+					"Elija un modo de juego",
+					"Iniciar Juego",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,     //do not use a custom Icon
+					options,  //the titles of buttons
+					options[0]); //default button title
+				if (n == 0) {
+					ajedrez.setIniciado(true);
+					ajedrez.setUsuarioJuega(false);
+				}else {
+					if (n == 1) {
+						ajedrez.setIniciado(true);
+						ajedrez.setUsuarioJuega(true);
+					}
+				}
 			}
 		});
 		
@@ -157,8 +178,28 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		mntmReiniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ajedrez.setFinalizado(true);
+				ajedrez.setUsuarioJugo(true);
+				Object[] options = {"PC vs PC",
+                "Jugador vs PC"};
+					Component frame = null;
+					int n = JOptionPane.showOptionDialog(frame,
+					"Elija un modo de juego",
+					"Iniciar Juego",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,     //do not use a custom Icon
+					options,  //the titles of buttons
+					options[0]); //default button title
+				if (n == 0) {
+					ajedrez.setUsuarioJuega(false);
+				}else {
+					if (n == 1) {
+						ajedrez.setUsuarioJuega(true);
+					}
+				}
+
 				try {
-					Thread.sleep(100); //Sleep para que los elementos gráficos carguen correctamente
+					Thread.sleep(300); //Sleep para que los elementos gráficos carguen correctamente
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -173,6 +214,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		mntmFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ajedrez.setFinalizado(true);
+				ajedrez.setUsuarioJugo(true);
 			}
 		});
 		mnIniciarJuego.add(mntmFinalizar);
@@ -238,18 +280,18 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			for(int j=0;j<=7;j++) {
 				if(i==0 || i%2==0) {
 					if (j==0 || j%2==0) {
-						celdasGUI[i][j]= new CeldaGUI(Color.WHITE);
+						celdasGUI[i][j]= new CeldaGUI(Color.WHITE, ajedrez);
 					}
 					else {
-						celdasGUI[i][j]= new CeldaGUI(Color.GRAY);
+						celdasGUI[i][j]= new CeldaGUI(Color.GRAY, ajedrez);
 					}
 				}
 				else {
 					if (j==0 || j%2==0) {
-						celdasGUI[i][j]= new CeldaGUI(Color.GRAY);
+						celdasGUI[i][j]= new CeldaGUI(Color.GRAY, ajedrez);
 					}
 					else {
-						celdasGUI[i][j]= new CeldaGUI(Color.WHITE);
+						celdasGUI[i][j]= new CeldaGUI(Color.WHITE, ajedrez);
 					}
 
 				}

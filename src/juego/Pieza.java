@@ -14,6 +14,8 @@ public abstract class Pieza{
 	//TODO {CORREGIDO}[CORRECCION] No puede haber nada de interfaz gráfica aca
 
 	
+	
+	
 	/**
 	 * Devuelve un arreglo de celdas posibles a los que se puede mover la pieza.
 	 * @return
@@ -75,6 +77,7 @@ public abstract class Pieza{
 		this.equipo = equipoMio;
 	}
 	
+	
 	/**
 	 * Mata a la pieza e incrementa las cantidad de piezas comidas al equipo correspondiente.
 	 */
@@ -105,6 +108,7 @@ public abstract class Pieza{
 		
 	}
 
+	
 	/**
 	 * La pieza se mueve.
 	 * Si la celda está ocupada por una pieza del equipo contrario, entonces la pieza que se mueve la mata.

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -14,14 +16,60 @@ public class CeldaGUI extends JButton{
 	private Icon imagen;
 	private int fila;
 	private int columna;
+	private Ajedrez ajedrez;
 	
-	//TODO [CORRECCION] Falta nivel de accesibiliadd
-	CeldaGUI(Color colorCelda){
+	//TODO {CORREGIDO}[CORRECCION] Falta nivel de accesibiliadd
+	public CeldaGUI(Color colorCelda, Ajedrez ajedrez){
+		
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO [CORRECCION] No hacen nada?
+				if (ajedrez.getUsuarioJuega()) {
+					//TODO [CORRECCION] No hacen nada?
+					CeldaGUI celdaGUI = ((CeldaGUI) e.getSource());
+					int fila = celdaGUI.fila;
+					int columna = celdaGUI.columna;
+					Celda celdaClickeada = celdaGUI.ajedrez.getTablero().getCelda(fila, columna);
+					if (!ajedrez.isFinalizado()) {
+						if (ajedrez.getPiezaMoviendose() == null && celdaClickeada.getPieza() != null) {
+							if (celdaClickeada.getPieza().getEquipo() == celdaClickeada.getPieza().getEquipo().getAjedrez().getEquipoBlancas()) {
+								ajedrez.setPiezaMoviendose(celdaClickeada.getPieza());
+							}
+						}else {
+							if (ajedrez.getPiezaMoviendose() != null &&  celdaClickeada.getPieza() == null) {
+								//moverse
+								if (ajedrez.getPiezaMoviendose().movimientoValido(celdaClickeada)) {
+									ajedrez.getPiezaMoviendose().moverse(celdaClickeada);
+									ajedrez.setPiezaMoviendose(null);
+									ajedrez.setUsuarioJugo(true);
+								}
+
+							}else {
+								if (ajedrez.getPiezaMoviendose() != null &&  celdaClickeada.getPieza() != null) {
+									Pieza piezaMoviendose = ajedrez.getPiezaMoviendose();
+									if (piezaMoviendose.getEquipo() != celdaClickeada.getPieza().getEquipo()) {
+										//va a comer
+										if (ajedrez.getPiezaMoviendose().movimientoValido(celdaClickeada)) {
+											ajedrez.getPiezaMoviendose().moverse(celdaClickeada);
+											ajedrez.setPiezaMoviendose(null);
+											ajedrez.setUsuarioJugo(true);
+										}
+									}else {
+										ajedrez.setPiezaMoviendose(celdaClickeada.getPieza());
+									}
+								}
+								//comer
+							}
+						}	
+					}
+					
+				}
+				
+				
 			}
 		});
+		
+		
+		this.ajedrez = ajedrez;
 		this.setBorder(new LineBorder(Color.DARK_GRAY));
 		this.setBackground(colorCelda);
 		this.setMaximumSize(new Dimension(10, 10));

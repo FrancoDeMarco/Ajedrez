@@ -9,15 +9,10 @@ public class Ajedrez{
 	private Equipo negras;
 	public static final String BLANCAS = "Blancas";
 	public static final String NEGRAS = "Negras";
-	
 	//TODO {CORREGIDO}[CORRECCION] Las piezas son de cada equipo, no del Ajedrez
-
-	
 	public ArrayList<IJuegoListener> juegoListener = new ArrayList<IJuegoListener>();
 	private static Ajedrez instancia = new Ajedrez();
-	
-	//TODO {CORREGIDO}[CORRECCION] El Ajedrez no puede tener una referencia al TableroGUI
-	
+	//TODO {CORREGIDO}[CORRECCION] El Ajedrez no puede tener una referencia al TableroGUI	
 	//TODO {CORREGIDO}[CORRECCION] Estas variables no pueden ser de clase 
 	private int movimientos = 0;
 	private int piezasBlancasComidas = 0;
@@ -25,8 +20,14 @@ public class Ajedrez{
 	private boolean finalizado = false;
 	private boolean reiniciado = false;
 	private boolean iniciado = false;
+	private boolean usuarioJuega = false;
+	private boolean usuarioJugo = false;
+	private Pieza piezaMoviendose;
 
-	
+	/**
+	 * Llama al tablero, crea las celdas, crea los equipos y crea las piezas. 
+	 * 
+	 */	
 	public void IniciarJuego() {
 		this.tablero = new Tablero();
 		tablero.crearCeldas(); 
@@ -36,8 +37,11 @@ public class Ajedrez{
 		this.crearPiezas();
 	}
 	
+	/**
+	 * Reinicia los movimientos, la cantidad de piezas blancas y negras comidas, resetea el tablero y crea de nuevo las celdas y los equipo al igual
+	 * que las piezas.
+	 */
 	public void reiniciarJuego() {
-		System.out.println("entro en reiniciar************************");
 		this.movimientos = 0;
 		this.piezasBlancasComidas = 0;
 		this.piezasNegrasComidas = 0;
@@ -69,10 +73,23 @@ public class Ajedrez{
 		return this.blancas;
 	}
 	
+	
+	public boolean isFinalizado() {
+		return finalizado;
+	}
+
+	public void setFinalizado(boolean finalizado) {
+		this.finalizado = finalizado;
+	}
+
 	public Equipo getEquipoNegras() {
 		return this.negras;
 	}
 
+	/**
+	 * Crea las piezas y las coloca en las celdas.
+	 * Para los peones, los recorre con un for y al final setea las piezas.
+	 */
 	public void crearPiezas() {
 		
 		ArrayList<Pieza> piezasBlancas = new ArrayList<Pieza>();
@@ -153,16 +170,35 @@ public class Ajedrez{
 		}
 	}
 	
+	public void setUsuarioJugo(boolean v) {
+		this.usuarioJugo = v;
+	}
+	
+	/**
+	 * Comienza el juego. No finaliza mientras el juego sea distinto de Finalizar.
+	 * Llama a la espera, cede los turnos, incrementa los movimientos y realiza una segunda espera
+	 */
 	public void Comenzar() {
 		for (IJuegoListener escuchador : this.juegoListener) {
 			escuchador.juegoEmpieza(this.getEquipoBlancas().getPiezas(), this.getEquipoNegras().getPiezas());
 		}
 		while(!this.finalizar()) {
 			this.espera();
-			this.darTurno(this.tablero, this.blancas);
+			if (!this.usuarioJuega) {
+				this.darTurno(this.tablero, this.blancas);
+			} else {
+				while(!this.usuarioJugo) {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					//ESPERANDO QUE EL USUARIO JUEGUE
+				}
+				this.usuarioJugo = false;
+			}
 			this.incrementarMovimientos();
 			this.espera();
-			
 			if(!this.finalizar()) {
 				this.darTurno(this.tablero, this.negras);
 			}
@@ -184,6 +220,9 @@ public class Ajedrez{
 		this.finalizado = v;
 	}
 	
+	public boolean getUsuarioJuega() {
+		return this.usuarioJuega;
+	}
 	
 	public Equipo darTurno(Tablero tablero, Equipo equipo) {
 		for (IJuegoListener escuchador : juegoListener) {
@@ -268,5 +307,21 @@ public class Ajedrez{
 
 	public void setIniciado(boolean iniciar) {
 		this.iniciado = iniciar;
+	}
+
+	public boolean isUsuarioJuega() {
+		return usuarioJuega;
+	}
+
+	public void setUsuarioJuega(boolean usuarioJuega) {
+		this.usuarioJuega = usuarioJuega;
+	}
+
+	public Pieza getPiezaMoviendose() {
+		return piezaMoviendose;
+	}
+
+	public void setPiezaMoviendose(Pieza piezaMoviendose) {
+		this.piezaMoviendose = piezaMoviendose;
 	}
 }
