@@ -149,6 +149,9 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		JMenuItem mntmNewMenuItem = new JMenuItem("Iniciar");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				mnIniciarJuego.getItem(0).setEnabled(false);
+				mnIniciarJuego.getItem(2).setEnabled(true);
+				mnIniciarJuego.getItem(1).setEnabled(true);
 				Object[] options = {"PC vs PC",
                 "Jugador vs PC"};
 					Component frame = null;
@@ -207,16 +210,20 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 			}
 		});
 		
-		
+		mntmReiniciar.setEnabled(false);
 		mnIniciarJuego.add(mntmReiniciar);
 		
 		JMenuItem mntmFinalizar = new JMenuItem("Finalizar");
 		mntmFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				mnIniciarJuego.getItem(2).setEnabled(false);
+				mnIniciarJuego.getItem(0).setEnabled(true);
+				mnIniciarJuego.getItem(1).setEnabled(false);
 				ajedrez.setFinalizado(true);
 				ajedrez.setUsuarioJugo(true);
 			}
 		});
+		mntmFinalizar.setEnabled(false);
 		mnIniciarJuego.add(mntmFinalizar);
 		
 		JMenuItem mntmSalir = new JMenuItem("Salir");
@@ -313,25 +320,19 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 		}
 	}
 
-	//TODO {CORREGIDO}[CORRECCION] No se utiliza nunca esto
-	
-	/*
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
+
+	@Override
+	public void juegoTermina(Equipo ganador) {
+		if (ganador != null) {
+			JOptionPane.showMessageDialog(null, "Juego terminado. El ganador es el equipo de las: "+ ganador.getNombre());
+			
+		}else {
+			JOptionPane.showMessageDialog(null, "Juego terminado.");
+		}
+		
 	}
-	*/
+
+	
+	
+	//TODO {CORREGIDO}[CORRECCION] No se utiliza nunca esto
 }

@@ -8,7 +8,7 @@ public interface IJuegoListener {
 		
 	}
 	
-	public default void juegoTermina() {
+	public default void juegoTermina(Equipo equipo) {
 		
 	}
 	

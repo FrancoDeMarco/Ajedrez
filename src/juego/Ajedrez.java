@@ -164,7 +164,7 @@ public class Ajedrez{
 	public void espera() {
 		System.out.println("\n");
 		try {
-			Thread.sleep(800);
+			Thread.sleep(100);
 		}catch(Exception e) {
 			System.out.println("\n");
 		}
@@ -182,7 +182,7 @@ public class Ajedrez{
 		for (IJuegoListener escuchador : this.juegoListener) {
 			escuchador.juegoEmpieza(this.getEquipoBlancas().getPiezas(), this.getEquipoNegras().getPiezas());
 		}
-		while(!this.finalizar()) {
+		while(!this.finalizado()) {
 			this.espera();
 			if (!this.usuarioJuega) {
 				this.darTurno(this.tablero, this.blancas);
@@ -199,7 +199,7 @@ public class Ajedrez{
 			}
 			this.incrementarMovimientos();
 			this.espera();
-			if(!this.finalizar()) {
+			if(!this.finalizado()) {
 				this.darTurno(this.tablero, this.negras);
 			}
 		}
@@ -208,10 +208,13 @@ public class Ajedrez{
 	
 	//TODO {CORREGIDO}[CORRECCION] Utilizar notacion camel
 	//TODO {CORREGIDO}[CORRECCION] Para que recibe "blancas" y "negras" si el Ajedrez ya las conoce
-	public boolean finalizar() {
+	public boolean finalizado() {
 		if ((this.blancas.getRey().estaViva())&&(this.negras.getRey().estaViva())&&!(this.finalizado)){
 			return false;
 		}else {
+			for (IJuegoListener escuchador : juegoListener) {
+				escuchador.juegoTermina(this.getGanador());
+			}
 			return true;
 		}
 	}
