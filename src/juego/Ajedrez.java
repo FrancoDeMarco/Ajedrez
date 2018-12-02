@@ -173,7 +173,7 @@ public class Ajedrez{
 	public void espera() {
 		System.out.println("\n");
 		try {
-			Thread.sleep(100);
+			Thread.sleep(800);
 		}catch(Exception e) {
 			System.out.println("\n");
 		}
