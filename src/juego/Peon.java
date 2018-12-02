@@ -33,9 +33,9 @@ public class Peon extends Pieza{
 				aux = -2;
 			}
 		}
-		if((this.getCelda().getColumna() == nuevaCelda.getColumna())&&
-			(this.getCelda().getFila()-nuevaCelda.getFila()==aux)&&
-			(!(nuevaCelda.getPieza()!=null))){
+		if((this.getCelda().getColumna() == nuevaCelda.getColumna())&& //Si va a moverse hacia adelante
+			(this.getCelda().getFila()-nuevaCelda.getFila()==aux)&& //Si se va a mover las casillas indicadas por aux (segun si es su primer movimiento o no)
+			(!(nuevaCelda.getPieza()!=null))){ //Si no come
 				if(Math.abs(aux) == 2) {
 					if (this.getEquipo().getAjedrez().getTablero().getCelda(this.getCelda().getFila()-(aux/2), this.getCelda().getColumna()).getPieza() == null) { //que no salte piezas
 						return true;
@@ -48,11 +48,26 @@ public class Peon extends Pieza{
 		}else {
 			if (Math.abs((this.getCelda().getColumna() - nuevaCelda.getColumna())) == 1  && //Si la columna es alguna de las que tiene a los costados
 					(this.getCelda().getFila()-nuevaCelda.getFila())==aux && 				//si no se mueve para atras
-					(Math.abs(aux) != 2) && 												//si no quiere moverse mas de dos casillas
-					(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo()))){ 			//si esta ocupado por el equipo contrario
+					(Math.abs(this.getCelda().getFila()-nuevaCelda.getFila()) != 2) && 		//si no quiere moverse mas de dos casillas
+					(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo()))){ 			//si esta ocupado por el equipo contrario (come)
 						return true;
 			} else {
-				return false;
+				if (!seMovio && 												//si es su primer movimiento
+					(this.getCelda().getColumna() == nuevaCelda.getColumna())&& //si se mueve para adelante
+					(this.getCelda().getFila()-nuevaCelda.getFila()==aux/2)&& //si quiere moverse una sola casilla (aunque sea su primer turno)
+					(!(nuevaCelda.getPieza()!=null))) { //si no come
+						return true;
+				} else {
+					if (!seMovio &&																//si no se movio
+						Math.abs((this.getCelda().getColumna() - nuevaCelda.getColumna())) == 1  && //Si la columna es alguna de las que tiene a los costados
+						(this.getCelda().getFila()-nuevaCelda.getFila())==aux/2 && 				//si no se mueve para atras
+						(Math.abs(this.getCelda().getFila()-nuevaCelda.getFila()) != 2) && 		//si no quiere moverse mas de dos casillas
+						(nuevaCelda.estaOcupadaEquipoContrario(this.getEquipo()))) {			//si come (en su primer movimiento)
+							return true;
+					} else {
+						return false;
+					}
+				}
 			}
 		}
 	}

@@ -32,8 +32,7 @@ public class Rey extends Pieza{
 	@Override
 	public boolean esRey() {
 		return true;
-	}
-	
+	}	
 	
 	
 }

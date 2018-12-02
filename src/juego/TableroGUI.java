@@ -153,7 +153,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 				mnIniciarJuego.getItem(2).setEnabled(true);
 				mnIniciarJuego.getItem(1).setEnabled(true);
 				Object[] options = {"PC vs PC",
-                "Jugador vs PC"};
+                "Jugador vs PC Ofensiva", "Jugador vs PC Master"};
 					Component frame = null;
 					int n = JOptionPane.showOptionDialog(frame,
 					"Elija un modo de juego",
@@ -167,10 +167,13 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 					ajedrez.setIniciado(true);
 					ajedrez.setUsuarioJuega(false);
 				}else {
-					if (n == 1) {
-						ajedrez.setIniciado(true);
-						ajedrez.setUsuarioJuega(true);
+					if (n == 2) {
+						ajedrez.setDificultadMaestra(true);
+					}else {
+						ajedrez.setDificultadMaestra(false);
 					}
+					ajedrez.setIniciado(true);
+					ajedrez.setUsuarioJuega(true);
 				}
 			}
 		});
@@ -183,7 +186,7 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 				ajedrez.setFinalizado(true);
 				ajedrez.setUsuarioJugo(true);
 				Object[] options = {"PC vs PC",
-                "Jugador vs PC"};
+                "Jugador vs PC Ofensiva", "Jugador vs PC Master"};
 					Component frame = null;
 					int n = JOptionPane.showOptionDialog(frame,
 					"Elija un modo de juego",
@@ -196,9 +199,12 @@ public class TableroGUI extends JFrame implements IJuegoListener, IPiezaListener
 				if (n == 0) {
 					ajedrez.setUsuarioJuega(false);
 				}else {
-					if (n == 1) {
-						ajedrez.setUsuarioJuega(true);
+					if (n == 2) {
+						ajedrez.setDificultadMaestra(true);
+					}else {
+						ajedrez.setDificultadMaestra(false);
 					}
+					ajedrez.setUsuarioJuega(true);
 				}
 
 				try {

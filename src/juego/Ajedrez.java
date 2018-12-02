@@ -21,6 +21,7 @@ public class Ajedrez{
 	private boolean reiniciado = false;
 	private boolean iniciado = false;
 	private boolean usuarioJuega = false;
+	private boolean dificultadMaestra = false;
 	private boolean usuarioJugo = false;
 	private Pieza piezaMoviendose;
 
@@ -67,6 +68,14 @@ public class Ajedrez{
 	
 	public Tablero getTablero() {
 		return tablero;
+	}
+	
+	public boolean isDificultadMaestra() {
+		return dificultadMaestra;
+	}
+
+	public void setDificultadMaestra(boolean dificultadFacil) {
+		this.dificultadMaestra = dificultadFacil;
 	}
 
 	public Equipo getEquipoBlancas() {
@@ -209,7 +218,7 @@ public class Ajedrez{
 	//TODO {CORREGIDO}[CORRECCION] Utilizar notacion camel
 	//TODO {CORREGIDO}[CORRECCION] Para que recibe "blancas" y "negras" si el Ajedrez ya las conoce
 	public boolean finalizado() {
-		if ((this.blancas.getRey().estaViva())&&(this.negras.getRey().estaViva())&&!(this.finalizado)){
+		if ((!this.blancas.esJaqueMate())&&(!this.negras.esJaqueMate())&&!(this.finalizado)){
 			return false;
 		}else {
 			for (IJuegoListener escuchador : juegoListener) {
@@ -241,10 +250,10 @@ public class Ajedrez{
 	
 	public Equipo getGanador() {
 		//TODO {CORREGIDO/usar}[CORRECCION] ???
-		if (!this.blancas.getRey().estaViva()) {
+		if (this.blancas.esJaqueMate()) {
 			return this.negras;
 		}else {
-			if (!this.negras.getRey().estaViva()) {
+			if (this.negras.esJaqueMate()) {
 				return this.blancas;
 			}
 			else {

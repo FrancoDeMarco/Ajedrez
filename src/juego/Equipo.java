@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Equipo {
 	private String nombre;
 	private Ajedrez ajedrez;
-	private boolean estaEnJaque;
 	private ArrayList<Pieza> piezas = new ArrayList<Pieza>();
 
 	public String getNombre() {
@@ -19,9 +18,61 @@ public class Equipo {
 	 */
 	public void jugar() {
 		ArrayList<Jugada> jugadas = this.calcularJugadasPosibles();
-		int x = jugadas.size();
-		int azar = ThreadLocalRandom.current().nextInt(0,x);
-		Jugada jugada = jugadas.get(azar);
+		Jugada jugada;
+		if (this.getAjedrez().isDificultadMaestra()) {
+			ArrayList<Jugada> jugadasQueComenMasImportantes = new ArrayList<Jugada>();
+			ArrayList<Jugada> jugadasQueComenMenosImportantes = new ArrayList<Jugada>();
+			for (Jugada j : jugadas) {
+				Pieza p = this.getAjedrez().getTablero().getCelda(j.getFila(), j.getColumna()).getPieza();
+				if (p != null) {
+					if (p.getEquipo() != this) {
+						if (p instanceof Reina || p instanceof Torre || p instanceof Rey) {
+							jugadasQueComenMasImportantes.add(j);
+						}else {
+							jugadasQueComenMenosImportantes.add(j);
+						}
+					}
+				}
+				
+			}
+			int z = jugadasQueComenMasImportantes.size();
+			if (z != 0) {
+				int azar = ThreadLocalRandom.current().nextInt(0,z);
+				jugada = jugadasQueComenMasImportantes.get(azar);
+			} else {
+				int y = jugadasQueComenMenosImportantes.size();
+				if (y != 0) {
+					int azar = ThreadLocalRandom.current().nextInt(0,y);
+					jugada = jugadasQueComenMenosImportantes.get(azar);
+				}else {
+					int x = jugadas.size();
+					int azar = ThreadLocalRandom.current().nextInt(0,x);
+					jugada = jugadas.get(azar);
+				}
+			}
+
+		} else {
+			ArrayList<Jugada> jugadasQueComen = new ArrayList<Jugada>();
+			for (Jugada j : jugadas) {
+				Pieza p = this.getAjedrez().getTablero().getCelda(j.getFila(), j.getColumna()).getPieza();
+				if (p != null) {
+					if (p.getEquipo() != this) {
+						jugadasQueComen.add(j);
+					}
+				}
+				
+			}
+			int y = jugadasQueComen.size();
+			if (y != 0) {
+				int azar = ThreadLocalRandom.current().nextInt(0,y);
+				jugada = jugadasQueComen.get(azar);
+			}else {
+				int x = jugadas.size();
+				int azar = ThreadLocalRandom.current().nextInt(0,x);
+				jugada = jugadas.get(azar);
+			}
+			
+		}
 		System.out.println("jugada: "+jugada);
 		System.out.println("Antes de ejecutar: Fila: " +  this.getRey().getCelda().getFila()+" ; Columna: " + this.getRey().getCelda().getColumna());
 		this.ejecutar(jugada);
@@ -31,7 +82,6 @@ public class Equipo {
 	public Equipo(String nombre, Ajedrez ajedrez) {
 		this.nombre = nombre;
 		this.ajedrez = ajedrez;
-		this.estaEnJaque = false;
 	}
 	
 	//TODO {CORREGIDO}[CORRECCION] No puede ser un metodo de clase 
@@ -83,5 +133,63 @@ public class Equipo {
 			}
 		}
 		return jugadas;
+	}
+	
+	/**
+	 * Metodo que me permite calcular cuando el Rey esta en Jaque, este metodo me sirve para luego evaluar el JaqueMate
+	 * @return
+	 */
+	public boolean estaEnJaque() {
+		
+		Celda posicionRey = this.getRey().getCelda();
+		Equipo contrario = this.getAjedrez().getEquipoContrario(this);
+		ArrayList<Jugada> jugadasContrarios = contrario.calcularJugadasPosibles();
+		
+		for (Jugada jugada : jugadasContrarios) {
+			int fila = jugada.getFila();
+			int columna = jugada.getColumna();
+			if (posicionRey == this.getAjedrez().getTablero().getCelda(fila, columna)) {
+				System.out.println("Jaque");
+				return true;
+			}
+		}
+		 return false;
+	}
+	
+	
+	/**
+	 * Tomo los movimientos posibles del Rey y los del equipo contrario. Reviso todos los movimientos del Rey e itero
+	 * sobre las jugadas del equipo contrario. Si veo que el movimiento que va a hacer el Rey está entre las jugadas
+	 * del equipo contrario entonces invalido el posible movimiento del Rey.
+	 * Si luego de hacer todos esos chequeos, veo que el Rey no tiene movimientos validos,entonces es JaqueMate.
+	 * @return
+	 */
+	public boolean esJaqueMate() {
+		if (!this.getRey().estaViva()) {
+			return true;
+		}
+		if (this.estaEnJaque()) {
+			ArrayList<Celda> movimientosPosibles = this.getRey().getCeldasPosibles(); //agarra los movimientos posibles del rey
+			Equipo contrario = this.getAjedrez().getEquipoContrario(this);
+			ArrayList<Jugada> jugadasContrarios = contrario.calcularJugadasPosibles(); //agarra los movimientos posibles del equipo contrario
+			boolean vaBien;
+			for (Celda mov : movimientosPosibles) { //revisa cada movimiento del rey
+				vaBien = true;
+				for (Jugada jugada : jugadasContrarios) { //itera sobre las jugadas del equipo contrario
+					int fila = jugada.getFila();
+					int columna = jugada.getColumna();
+					if (mov == this.getAjedrez().getTablero().getCelda(fila, columna)) { //si encuentra que el movimiento esta entre las jugadas posibles del equipo contrario, entonces ya no es valido
+						vaBien = false;
+						break;
+					}
+				}
+				if (vaBien) { //si en ningun momento se delclaro el movimiento como no valido, entonces el rey puede salir del jaque
+					return false;
+				}
+			}
+			System.out.println("Jaque Mate");
+			return true; //si no se encontro movimiento para salir del jaque, es jaque mate
+		}
+		return false;
 	}
 }
